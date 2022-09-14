@@ -38,5 +38,3 @@ public class RectangleGlyph extends Glyph {
         content.setLocation(x, y);
     }
 }
-
-

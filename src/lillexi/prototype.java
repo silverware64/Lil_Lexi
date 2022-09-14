@@ -7,14 +7,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 class Prototype implements Cloneable {
-   
-   Prototype(){
-       try {
+
+    Prototype(){
+        try {
         }
-         catch (Exception e) {
+        catch (Exception e) {
             JOptionPane.showMessageDialog(null, "GUI Error");
         }
-        
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -25,10 +25,9 @@ class Prototype implements Cloneable {
                 }
             }
         });
+    }
+    @Override
+    public Object clone() throws CloneNotSupportedException{
+        return new Prototype();
+    }
 }
-  @Override
-	public Object clone() throws CloneNotSupportedException{
-		return new Prototype();	
-	}
-}
-
