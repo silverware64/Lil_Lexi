@@ -2,6 +2,7 @@
  * Lil Lexi Document Model
  * 
  */
+import javax.swing.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -29,9 +30,9 @@ public class LilLexiDoc
 	/**
 	 * add a char
 	 */
-	public void add(char c) 
+	public void add(String s, JEditorPane window)
 	{
-		glyphs.add(new Glyph(c));
+		glyphs.add(new CharGlyph(window,s));
 		ui.updateUI();
 	}
 	
@@ -47,18 +48,7 @@ public class LilLexiDoc
 /**
  * Glyph
  */
-class Glyph 
-{
-	private char c;
-	
-	public Glyph(char c) 
-	{
-		this.c = c;
-	}
 
-	public char getChar() {return c;}
-	public void setChar(char c) {this.c = c;}
-}
 
 
 

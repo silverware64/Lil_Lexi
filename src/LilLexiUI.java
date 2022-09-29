@@ -90,7 +90,7 @@ public class LilLexiUI {
         canvas.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				super.keyPressed(e);
+				currentDoc.add(Character.toString(e.getKeyChar()),editorPane);
 			}
 		});
 /*
