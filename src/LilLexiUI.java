@@ -1,7 +1,7 @@
 /**
  * UI for Lil Lexi
  * 
- */
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
 import org.eclipse.swt.widgets.*;
@@ -11,41 +11,47 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Font;
+ */
 import java.util.List;
+import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollBar;
+
+
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.Label;
 
 
 /**
  * LilLexiUI
- * Testing
+ *
  */
-public class LilLexiUI
-{
+public class LilLexiUI {
 	private LilLexiDoc currentDoc;
 	private LilLexiControl lexiControl;
-	private Display display;
-	private Shell shell;
+	/*private Display display;
+	private Shell shell;*/
 	private Label statusLabel;
-	private Canvas canvas;	
+	private JEditorPane editorPane;
+	private JScrollBar scrollBar1;
+	private Canvas canvas;
 	
 	/**
 	 * Ctor
 	 */
-	public LilLexiUI() 
-	{
+	public LilLexiUI() {
 		//---- create the window and the shell
-		Display.setAppName("Lil Lexi");
-		display = new Display();  
-		shell = new Shell(display);
-	    shell.setText("Lil Lexi");
-		shell.setSize(900,900);
-		shell.setLayout( new GridLayout());	
+		JFrame frame = new JFrame("Lil Lexi");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(900,900);
 	}
 		
 	/**
 	 * start the editor
 	 */
-	public void start()
-	{	
+	public void start()  {
 		//---- create widgets for the interface
 	    Composite upperComp = new Composite(shell, SWT.NO_FOCUS);
 	    Composite lowerComp = new Composite(shell, SWT.NO_FOCUS);
@@ -57,7 +63,7 @@ public class LilLexiUI
 		canvas.addPaintListener(e -> {
 			System.out.println("PaintListener");
 			Rectangle rect = shell.getClientArea();
-			e.gc.setBackground(display.getSystemColor(SWT.COLOR_WHITE)); 
+			e.gc.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
             e.gc.fillRectangle(rect.x, rect.y, rect.width, rect.height);
             e.gc.setForeground(display.getSystemColor(SWT.COLOR_BLUE)); 
     		Font font = new Font(display, "Courier", 24, SWT.BOLD );
@@ -74,22 +80,20 @@ public class LilLexiUI
     		}
 		});	
 		
-        canvas.addMouseListener(new MouseListener() {
-            public void mouseDown(MouseEvent e) {
-            	System.out.println("mouseDown in canvas");
-            } 
-            public void mouseUp(MouseEvent e) {} 
-            public void mouseDoubleClick(MouseEvent e) {} 
-        });
+        canvas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				super.mousePressed(e);
+			}
+		});
         
-        canvas.addKeyListener(new KeyListener() {
-        	public void keyPressed(KeyEvent e) {
-        		System.out.println("key " + e.character);
-        		lexiControl.add(e.character);
-        	}
-        	public void keyReleased(KeyEvent e) {}
-        });
-
+        canvas.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				super.keyPressed(e);
+			}
+		});
+/*
 		Slider slider = new Slider (canvas, SWT.VERTICAL);
 		Rectangle clientArea = canvas.getClientArea ();
 		slider.setBounds (clientArea.width - 40, clientArea.y + 10, 32, clientArea.height);
@@ -110,19 +114,20 @@ public class LilLexiUI
         //---- status label
         lowerComp.setLayout(new RowLayout());
         statusLabel = new Label(lowerComp, SWT.NONE);		
-
+*/
 		FontData[] fD = statusLabel.getFont().getFontData();
 		fD[0].setHeight(24);
 		statusLabel.setFont( new Font(display,fD[0]));
 		statusLabel.setText("Ready to edit!");
 		
 		//---- main menu
+
 		Menu menuBar, fileMenu, insertMenu, helpMenu;
 		MenuItem fileMenuHeader, insertMenuHeader, helpMenuHeader, fileExitItem, fileSaveItem, helpGetHelpItem;
 		MenuItem insertImageItem, insertRectItem;
 
-		menuBar = new Menu(shell, SWT.BAR);
-		
+		menuBar = new Menu("Menu");
+
 		fileMenuHeader = new MenuItem(menuBar, SWT.CASCADE);
 		fileMenuHeader.setText("File");
 		fileMenu = new Menu(shell, SWT.DROP_DOWN);
@@ -151,7 +156,7 @@ public class LilLexiUI
 	    helpGetHelpItem = new MenuItem(helpMenu, SWT.PUSH);
 	    helpGetHelpItem.setText("Get Help");
 	    
-	    fileExitItem.addSelectionListener(new SelectionListener() {
+	    fileExitItem.addSelectionListener(new SharedListSelectionListener() {
 	    	public void widgetSelected(SelectionEvent event) {
 	    		shell.close();
 	    		display.dispose();
@@ -198,7 +203,7 @@ public class LilLexiUI
 	public void updateUI()
 	{
 		System.out.println("updateUI");
-		canvas.redraw();
+		canvas.repaint();
 	}
 	
 	/**
