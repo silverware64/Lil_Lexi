@@ -28,12 +28,11 @@ public class LilLexiDoc
 	public void setUI(LilLexiUI ui) {this.ui = ui;}
 
 	/**
-	 * add a char
+	 * add a glyph
 	 */
 	public void add(String s, JEditorPane window)
 	{
 		glyphs.add(new CharGlyph(window,s));
-		ui.updateUI();
 	}
 	
 	/**

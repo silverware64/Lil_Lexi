@@ -9,17 +9,11 @@ public class LilLexi
 
 	public static void main(String args[])
 	{
-		if (currentDoc == null)
-			currentDoc = new LilLexiDoc();
-		LilLexiUI lexiUI = new LilLexiUI();
-		lexiUI.setCurrentDoc( currentDoc );
-		currentDoc.setUI(lexiUI);
-		
-		LilLexiControl lexiControl = new LilLexiControl( currentDoc );
-		lexiUI.setController( lexiControl );
-		
-		lexiUI.start();
-	} 
+		LilLexiUI window = new LilLexiUI();
+		window.start();
+		window.update();
+
+	}
 }
 
 

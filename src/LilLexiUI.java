@@ -14,19 +14,18 @@ interface BaseComposite {
 
 class Base implements BaseComposite {
 	JFrame frame;
-	JPanel north, editPane, status, image, tools, menu, east, west, padding1, padding2, padding_bottom;
+	JPanel north, editPane, status, image, tools, menu, east, west, padding_bottom;
 	JLabel message;
 	JLabel title;
 	JTextPane editarea2;
 	int flagSave = 0;
 	File fileSave = null;
 
-	Base() {
+	public Base() {
 		frame = new JFrame("Document Editor");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setLayout(new BorderLayout());
-		frame.pack();
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
@@ -39,17 +38,8 @@ class Base implements BaseComposite {
 		tools = new JPanel(new BorderLayout(5, 5));
 		east = new JPanel();
 		west = new JPanel();
-		padding1 = new JPanel();
-		padding2 = new JPanel();
 		menu = new JPanel(new BorderLayout(5, 5));
-		message = new JLabel("Status will be displayed here.");
-		message.setAlignmentX(Component.CENTER_ALIGNMENT);
-		message.setForeground(Color.BLACK);
-		message.setFont(courier20);
 		padding_bottom = new JPanel();
-		title = new JLabel("Document Editor");
-		title.setForeground(Color.BLACK);
-		title.setFont(courier36);
 
 		// Adding JPanel, JLabels to the JFrame with the default Border Layout
 		frame.add(north, BorderLayout.NORTH);
@@ -59,27 +49,17 @@ class Base implements BaseComposite {
 		frame.add(west, BorderLayout.WEST);
 		north.add(image, BorderLayout.NORTH);
 		north.add(menu, BorderLayout.SOUTH);
-		image.add(title);
-		status.add(padding_bottom, BorderLayout.WEST);
-		status.add(message, BorderLayout.CENTER);
-		menu.add(padding1, BorderLayout.WEST);
-		menu.add(padding2, BorderLayout.EAST);
 		menu.add(tools, BorderLayout.CENTER);
 
 		// Setting the layout of the 'tools' JPanel
 		tools.setLayout(new BoxLayout(tools, BoxLayout.X_AXIS));
 
 		// Setting preferred size of each component
-		message.setPreferredSize(new Dimension(600, 200));
-		padding_bottom.setPreferredSize(new Dimension(800, 200));
 		image.setPreferredSize(new Dimension(500, 100));
 		tools.setPreferredSize(new Dimension(500, 100));
-		editPane.setPreferredSize(new Dimension(600, 150));
-		status.setPreferredSize(new Dimension(100, 100));
+		editPane.setPreferredSize(new Dimension(800, 800));
 		east.setPreferredSize(new Dimension(200, 100));
 		west.setPreferredSize(new Dimension(200, 100));
-		padding1.setPreferredSize(new Dimension(200, 100));
-		padding2.setPreferredSize(new Dimension(200, 100));
 
 		// Setting opacity of each component
 		padding_bottom.setOpaque(false);
@@ -88,8 +68,6 @@ class Base implements BaseComposite {
 		east.setOpaque(false);
 		west.setOpaque(false);
 		status.setOpaque(false);
-		padding1.setOpaque(false);
-		padding2.setOpaque(false);
 		image.setOpaque(false);
 		editPane.setOpaque(false);
 		north.setOpaque(false);
@@ -740,7 +718,7 @@ class AddBorder extends Decorating {
 	@Override
 	void addDecor(int flag) {
 		if (flag % 2 == 0) {
-			pane.setMargin(new Insets(100, 100, 100, 100));
+			pane.setMargin(new Insets(0, 100, 100, 100));
 			pane.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.BLACK,
 					25), BorderFactory.createEmptyBorder(20, 20, 20, 20)));
 		} else {
@@ -763,32 +741,18 @@ class AddScrollBar extends Decorating {
 }
 
 public class LilLexiUI {
-	public static void main(String[] args) {
+
+	private Base base;
+	public void start() {
 		// Instantiating the Base class in the Composite Design Pattern
-		Base b = new Base();
+		Base base = new Base();
 
 		// Collecting objects of JPanel & JTextPane
-		JPanel p = b.addComposite();
-		JTextPane t = b.addLeaf();
-
-		// Instantiating all classes used to add functionalities using Command Design Pattern
-		FontSize fs = new FontSize(p, t);
-		FontStyle st = new FontStyle(p, t);
-		FontColor clr = new FontColor(p, t);
-		FontFamily fam = new FontFamily(p, t);
-		Decorate dr = new Decorate(p, t);
-		Os os = new Os(p, t, b.message);
-
-		// Instantiating the Invoker class and adding all buttons to the array list
-		Invoke iv = new Invoke();
-		iv.addButton(fs);
-		iv.addButton(st);
-		iv.addButton(clr);
-		iv.addButton(fam);
-		iv.addButton(dr);
-		iv.addButton(os);
-
-		// Placing the buttons on the JPanel using placeButton() method
-		iv.placeButton();
+		JPanel p = base.addComposite();
+		JTextPane t = base.addLeaf();
+		base.frame.pack();
+	}
+	public void update(){
+		base.frame.pack();
 	}
 }

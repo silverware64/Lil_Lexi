@@ -14,14 +14,6 @@ public class LilLexiControl
 	{
 		this.currentDoc = doc;
 	}
-	
-	/**
-	 * selectCard  user selects a card
-	 */
-	void add( char c ) 
-	{	
-		currentDoc.add(c);
-	}	
 
 	/**
 	 * quitEditor  user quits
