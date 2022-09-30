@@ -14,42 +14,35 @@ interface BaseComposite {
 
 class Base implements BaseComposite {
 	JFrame frame;
-	JPanel north, editPane, status, image, tools, menu, east, west, padding1, padding2, padding_bottom;
+	JPanel north, editPane, status, image, tools, menu, east, west;
 	JLabel message;
 	JLabel title;
-	JTextPane editarea2;
+	JTextPane editArea;
 	int flagSave = 0;
 	File fileSave = null;
 
 	Base() {
-		frame = new JFrame("Document Editor");
+		frame = new JFrame("Lil Lexi");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setLayout(new BorderLayout());
 		frame.pack();
+		addComposite();
+		addLeaf();
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	}
 
 	public JPanel addComposite() {
 		// Creating required JPanels and JLabels and setting text colors
 		north = new JPanel(new BorderLayout(5, 5));
-		editPane = new JPanel();
 		status = new JPanel(new BorderLayout(5, 5));
-		image = new JPanel(new FlowLayout());
 		tools = new JPanel(new BorderLayout(5, 5));
+		menu = new JPanel(new BorderLayout(5, 5));
+		image = new JPanel(new FlowLayout());
+		editPane = new JPanel();
 		east = new JPanel();
 		west = new JPanel();
-		padding1 = new JPanel();
-		padding2 = new JPanel();
-		menu = new JPanel(new BorderLayout(5, 5));
-		message = new JLabel("Status will be displayed here.");
-		message.setAlignmentX(Component.CENTER_ALIGNMENT);
-		message.setForeground(Color.BLACK);
-		message.setFont(courier20);
-		padding_bottom = new JPanel();
-		title = new JLabel("Document Editor");
-		title.setForeground(Color.BLACK);
-		title.setFont(courier36);
+
 
 		// Adding JPanel, JLabels to the JFrame with the default Border Layout
 		frame.add(north, BorderLayout.NORTH);
@@ -58,55 +51,40 @@ class Base implements BaseComposite {
 		frame.add(east, BorderLayout.EAST);
 		frame.add(west, BorderLayout.WEST);
 		north.add(image, BorderLayout.NORTH);
-		north.add(menu, BorderLayout.SOUTH);
-		image.add(title);
-		status.add(padding_bottom, BorderLayout.WEST);
-		status.add(message, BorderLayout.CENTER);
-		menu.add(padding1, BorderLayout.WEST);
-		menu.add(padding2, BorderLayout.EAST);
-		menu.add(tools, BorderLayout.CENTER);
+		north.add(menu, BorderLayout.NORTH);
 
 		// Setting the layout of the 'tools' JPanel
 		tools.setLayout(new BoxLayout(tools, BoxLayout.X_AXIS));
 
 		// Setting preferred size of each component
-		message.setPreferredSize(new Dimension(600, 200));
-		padding_bottom.setPreferredSize(new Dimension(800, 200));
+		//message.setPreferredSize(new Dimension(600, 200));
 		image.setPreferredSize(new Dimension(500, 100));
 		tools.setPreferredSize(new Dimension(500, 100));
-		editPane.setPreferredSize(new Dimension(600, 150));
+		editPane.setPreferredSize(new Dimension(800, 800));
 		status.setPreferredSize(new Dimension(100, 100));
 		east.setPreferredSize(new Dimension(200, 100));
 		west.setPreferredSize(new Dimension(200, 100));
-		padding1.setPreferredSize(new Dimension(200, 100));
-		padding2.setPreferredSize(new Dimension(200, 100));
 
 		// Setting opacity of each component
-		padding_bottom.setOpaque(false);
 		menu.setOpaque(false);
 		tools.setOpaque(false);
 		east.setOpaque(false);
 		west.setOpaque(false);
 		status.setOpaque(false);
-		padding1.setOpaque(false);
-		padding2.setOpaque(false);
 		image.setOpaque(false);
 		editPane.setOpaque(false);
 		north.setOpaque(false);
-
 		return tools;
 	}
 
 	public JTextPane addLeaf() {
 		JMenuBar menubar = new JMenuBar();
-
 		JMenu file = new JMenu("File");
 		menubar.add(file);
-		editarea2 = new JTextPane();
-		editarea2.setMargin(new Insets(10, 10, 10, 10));
-		editarea2.setPreferredSize(new Dimension(600, 600));
-		JScrollPane scroll = new JScrollPane(editarea2);
-
+		editArea = new JTextPane();
+		editArea.setMargin(new Insets(10, 10, 10, 10));
+		editArea.setPreferredSize(new Dimension(600, 600));
+		JScrollPane scroll = new JScrollPane(editArea);
 		JMenuItem open = new JMenuItem("Open");
 		file.add(open);
 		open.addActionListener(ae -> {
@@ -118,7 +96,7 @@ class Base implements BaseComposite {
 					FileInputStream fis = new FileInputStream(file1.getAbsolutePath());
 					BufferedReader input = new BufferedReader(new InputStreamReader(new
 							FileInputStream(file1)));
-					editarea2.read(input, "READING FILE :-)");
+					editArea.read(input, "READING FILE :-)");
 					fis.close();
 				} catch (Exception ex) {
 					System.out.println("problem accessing file" + file1.getAbsolutePath());
@@ -131,11 +109,11 @@ class Base implements BaseComposite {
 		JMenuItem neww = new JMenuItem("New");
 		file.add(neww);
 		neww.addActionListener(ae -> {
-			if (editarea2.getText().isEmpty()) {
-				editarea2.setText("");
+			if (editArea.getText().isEmpty()) {
+				editArea.setText("");
 			} else {
 				save();
-				editarea2.setText("");
+				editArea.setText("");
 				flagSave = 0;
 				fileSave = null;
 			}
@@ -152,7 +130,7 @@ class Base implements BaseComposite {
 					Logger.getLogger(Document.class.getName()).log(Level.SEVERE, null, ex);
 				}
 				try {
-					editarea2.write(outFile);
+					editArea.write(outFile);
 				} catch (IOException ex) {
 					Logger.getLogger(Document.class.getName()).log(Level.SEVERE, null, ex);
 				} finally {
@@ -200,7 +178,7 @@ class Base implements BaseComposite {
 		JRootPane root2 = editPane.getRootPane();
 		root2.getContentPane().add(scroll);
 		editPane.setVisible(true);
-		return editarea2;
+		return editArea;
 	}
 
 	// Method to perform the save as operation on the text
@@ -224,7 +202,7 @@ class Base implements BaseComposite {
 			ex.printStackTrace();
 		}
 		try {
-			editarea2.write(outFile);
+			editArea.write(outFile);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -244,7 +222,6 @@ class Base implements BaseComposite {
  */
 interface ButtonsCommand {
 	void click();
-
 	Font f = new Font("Inconsolata", Font.BOLD, 15);
 	Dimension dimen = new Dimension(200, 200);
 }
@@ -271,7 +248,7 @@ class FontSize implements ButtonsCommand {
 		l1.setForeground(Color.BLACK);
 		label = new JLabel("\t\t\t\t");
 		StyledDocument doc = (StyledDocument) pane.getDocument();
-		Style style = doc.addStyle("StyleName", null);
+		Style style = doc.addStyle("Style", null);
 		a = StyleConstants.getFontSize(style);
 	}
 
@@ -296,7 +273,6 @@ class FontSize implements ButtonsCommand {
 			float size = font.getSize() + 2.0f;
 			pane.setFont(font.deriveFont(size));
 		});
-
 		decr.addActionListener(ae -> {
 			Font font = pane.getFont();
 			float size = font.getSize() - 2.0f;
@@ -304,7 +280,6 @@ class FontSize implements ButtonsCommand {
 		});
 	}
 }
-
 class FontStyle implements ButtonsCommand {
 	JButton bold, italics, underline;
 	JPanel tools, p2;
@@ -343,7 +318,7 @@ class FontStyle implements ButtonsCommand {
 
 		bold.addActionListener(ae -> {
 			StyledDocument doc = (StyledDocument) pane.getDocument();
-			Style style = doc.addStyle("StyleName", null);
+			Style style = doc.addStyle("Style", null);
 			StyleConstants.setBold(style, true);
 			try {
 				String text = pane.getDocument().getText(0, pane.getDocument().getLength());
@@ -356,8 +331,10 @@ class FontStyle implements ButtonsCommand {
 
 		italics.addActionListener(ae -> {
 					StyledDocument doc = (StyledDocument) pane.getDocument();
-					Style style = doc.addStyle("StyleName", null);
+					Style style = doc.addStyle("Style", null);
 					StyleConstants.setItalic(style, true);
+
+					// Put in Model file.
 					try {
 						String text = pane.getDocument().getText(0, pane.getDocument().getLength());
 						pane.setText("");
@@ -370,8 +347,10 @@ class FontStyle implements ButtonsCommand {
 
 		underline.addActionListener( ae -> {
 					StyledDocument doc = (StyledDocument) pane.getDocument();
-					Style style = doc.addStyle("StyleName", null);
+					Style style = doc.addStyle("Style", null);
 					StyleConstants.setUnderline(style, true);
+
+					// Put in Model file.
 					try {
 						String text = pane.getDocument().getText(0, pane.getDocument().getLength());
 						pane.setText("");
@@ -395,16 +374,12 @@ class FontColor implements ButtonsCommand {
 		this.tools = tools;
 		p3 = new JPanel();
 		p3.setOpaque(false);
-
 		red = new JButton("Red");
 		red.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 		green = new JButton("Green");
 		green.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 		blue = new JButton("Blue");
 		blue.setAlignmentX(Component.CENTER_ALIGNMENT);
-
 		l3 = new JLabel("Color");
 		l3.setForeground(Color.BLACK);
 		l3.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -425,7 +400,7 @@ class FontColor implements ButtonsCommand {
 		tools.add(temp);
 		red.addActionListener( ae -> {
 			StyledDocument doc = (StyledDocument) pane.getDocument();
-			Style style = doc.addStyle("StyleName", null);
+			Style style = doc.addStyle("Style", null);
 			StyleConstants.setForeground(style, Color.RED);
 			try {
 				String text = pane.getDocument().getText(0, pane.getDocument().getLength());
@@ -438,7 +413,7 @@ class FontColor implements ButtonsCommand {
 
 		green.addActionListener(ae -> {
 			StyledDocument doc = (StyledDocument) pane.getDocument();
-			Style style = doc.addStyle("StyleName", null);
+			Style style = doc.addStyle("Style", null);
 			StyleConstants.setForeground(style, Color.GREEN);
 			try {
 				String text = pane.getDocument().getText(0, pane.getDocument().getLength());
@@ -451,7 +426,7 @@ class FontColor implements ButtonsCommand {
 
 		blue.addActionListener(ae -> {
 			StyledDocument doc = (StyledDocument) pane.getDocument();
-			Style style = doc.addStyle("StyleName", null);
+			Style style = doc.addStyle("Style", null);
 			StyleConstants.setForeground(style, Color.BLUE);
 			try {
 				String text = pane.getDocument().getText(0, pane.getDocument().getLength());
@@ -515,7 +490,7 @@ class FontFamily implements ButtonsCommand {
 
 		calibre.addActionListener(ae -> {
 			StyledDocument doc = (StyledDocument) pane.getDocument();
-			Style style = doc.addStyle("StyleName", null);
+			Style style = doc.addStyle("Style", null);
 			StyleConstants.setFontFamily(style, "Calibri");
 			try {
 				String text = pane.getDocument().getText(0, pane.getDocument().getLength());
@@ -528,7 +503,7 @@ class FontFamily implements ButtonsCommand {
 
 		sansSerif.addActionListener(ae -> {
 			StyledDocument doc = (StyledDocument) pane.getDocument();
-			Style style = doc.addStyle("StyleName", null);
+			Style style = doc.addStyle("Style", null);
 			StyleConstants.setFontSize(style, 32);
 			StyleConstants.setFontFamily(style, "OCR A Extended");
 			try {

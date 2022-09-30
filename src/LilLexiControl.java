@@ -1,37 +1,23 @@
-
-
 /**
  * Controller
  */
-public class LilLexiControl 
-{
+public class LilLexiControl {
 	private LilLexiDoc currentDoc;
 
 	/**
 	 * LilLexiControl
 	 */
-	public LilLexiControl( LilLexiDoc doc )
-	{
+	public LilLexiControl( LilLexiDoc doc ) {
 		this.currentDoc = doc;
 	}
-	
-	/**
-	 * selectCard  user selects a card
-	 */
-	void add( char c ) 
-	{	
-		currentDoc.add(c);
-	}	
 
 	/**
 	 * quitEditor  user quits
 	 */
-	void  quitEditor() 
-	{ 
-		System.exit(0); 
-	}	
+	void  quitEditor() {
+		System.exit(0);
+	}
 }
-
 
 
 

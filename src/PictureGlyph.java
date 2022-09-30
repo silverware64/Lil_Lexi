@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class PictureGlyph extends Glyph{
+public class PictureGlyph extends Glyph {
     PictureGlyph(JEditorPane window, String contents){
         this.contents = contents;
         this.window = window;
