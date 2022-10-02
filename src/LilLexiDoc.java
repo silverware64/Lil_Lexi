@@ -1,6 +1,6 @@
 /**
  * Lil Lexi Document Model
- * 
+ *
  */
 import javax.swing.*;
 import java.util.List;
@@ -9,19 +9,17 @@ import java.util.ArrayList;
 /**
  * LilLexiDoc
  */
-public class LilLexiDoc 
-{
+public class LilLexiDoc {
 	private LilLexiUI ui;
 	private List<Glyph> glyphs;
-	
+
 	/**
 	 * Ctor
 	 */
-	public LilLexiDoc() 
-	{
+	public LilLexiDoc() {
 		glyphs = new ArrayList<Glyph>();
 	}
-	
+
 	/**
 	 * setUI
 	 */
@@ -30,26 +28,15 @@ public class LilLexiDoc
 	/**
 	 * add a glyph
 	 */
-	public void add(String s, JEditorPane window)
-	{
+	public void add(String s, JEditorPane window) {
 		glyphs.add(new CharGlyph(window,s));
 	}
-	
+
 	/**
 	 * gets
 	 */
 	public List<Glyph> getGlyphs(){return glyphs;}
 }
-
-
-
-
 /**
  * Glyph
  */
-
-
-
-
-
-
