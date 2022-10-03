@@ -1,2 +1,2 @@
-# Lil_Lexi
+# Lil Lexi
 The real Lil Lexi editor.

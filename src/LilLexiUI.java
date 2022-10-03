@@ -29,17 +29,16 @@ class Base implements BaseComposite {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
-
+		JScrollPane scrollPane = new JScrollPane(editPane);
 	}
 
 	public JPanel addComposite() {
 		// Creating required JPanels and JLabels and setting text colors
-		north = new JPanel(new BorderLayout(5, 5));
+		north = new JPanel(new BorderLayout(1, 1));
 		editPane = new JPanel();
-		status = new JPanel(new BorderLayout(5, 5));
+		status = new JPanel(new BorderLayout(1, 1));
 		image = new JPanel(new FlowLayout());
-		tools = new JPanel(new BorderLayout(5, 5));
+		tools = new JPanel(new BorderLayout(1, 1));
 		east = new JPanel();
 		west = new JPanel();
 		menu = new JPanel(new BorderLayout(5, 5));
@@ -54,35 +53,30 @@ class Base implements BaseComposite {
 		north.add(image, BorderLayout.NORTH);
 		north.add(menu, BorderLayout.SOUTH);
 		menu.add(tools, BorderLayout.CENTER);
-		east.add(new Scrollbar());
+		east.add(new Scrollbar(Scrollbar.VERTICAL, 0, 1, 800, 800));
 
 		// Setting the layout of the 'tools' JPanel
 		tools.setLayout(new BoxLayout(tools, BoxLayout.X_AXIS));
 
 		// Setting preferred size of each component
-		image.setPreferredSize(new Dimension(500, 100));
-		tools.setSize(new Dimension(500, 100));
-		editPane.setSize(new Dimension(800, 800));
-		east.setPreferredSize(new Dimension(200, 800));
-		west.setPreferredSize(new Dimension(200, 100));
+		image.setPreferredSize(new Dimension(200, 100));
+		editPane.setSize(new Dimension(850, 1100));
+		east.setPreferredSize(new Dimension(10, 800));
+		west.setPreferredSize(new Dimension(0, 800));
 
 		// Setting opacity of each component
 		padding_bottom.setOpaque(false);
 		menu.setOpaque(false);
-		tools.setOpaque(false);
 		east.setOpaque(true);
 		west.setOpaque(false);
-		status.setOpaque(false);
 		image.setOpaque(false);
 		editPane.setOpaque(false);
 		north.setOpaque(false);
-
 		return tools;
 	}
 
 	public JPanel addLeaf() {
 		JMenuBar menubar = new JMenuBar();
-
 		JMenu file = new JMenu("File");
 		menubar.add(file);
 		editarea2 = new JPanel();
@@ -90,56 +84,89 @@ class Base implements BaseComposite {
 		editarea2.setBackground(Color.white);
 		JScrollPane scroll = new JScrollPane(editarea2);
 
-			JMenuItem open = new JMenuItem("Open");
-			file.add(open);
-			open.addActionListener(ae -> {});
+		JMenuItem open = new JMenuItem("Open");
+		file.add(open);
+		open.addActionListener(ae -> {});
 
-			JMenuItem neww = new JMenuItem("New");
-			file.add(neww);
-			neww.addActionListener(ae -> {});
+		JMenuItem neww = new JMenuItem("New");
+		file.add(neww);
+		neww.addActionListener(ae -> {});
 
-			JMenuItem save = new JMenuItem("Save");
-			file.add(save);
-			save.addActionListener(ae -> {});
+		JMenuItem save = new JMenuItem("Save");
+		file.add(save);
+		save.addActionListener(ae -> {});
 
-			JMenuItem saveas = new JMenuItem("Save As");
-			file.add(saveas);
-			saveas.addActionListener(ae -> save());
+		JMenuItem saveas = new JMenuItem("Save As");
+		file.add(saveas);
+		saveas.addActionListener(ae -> save());
 
-			JMenuItem quit = new JMenuItem("Quit");
-			file.add(quit);
-			quit.addActionListener(ae -> frame.dispose());
+		JMenuItem quit = new JMenuItem("Quit");
+		file.add(quit);
+		quit.addActionListener(ae -> frame.dispose());
 
 		JMenu edit = new JMenu("Edit");
 		menubar.add(edit);
 
-			JMenuItem undo = new JMenuItem("Undo");
-			edit.add(undo);
-			undo.addActionListener(ae -> {});
+		JMenuItem undo = new JMenuItem("Undo");
+		edit.add(undo);
+		undo.addActionListener(ae -> {});
 
-			JMenuItem cut = new JMenuItem(new DefaultEditorKit.CutAction());
-			cut.setText("Cut");
-			edit.add(cut);
+		JMenuItem cut = new JMenuItem(new DefaultEditorKit.CutAction());
+		cut.setText("Cut");
+		edit.add(cut);
 
-			JMenuItem copy = new JMenuItem(new DefaultEditorKit.CopyAction());
-			copy.setText("Copy");
-			edit.add(copy);
-			JMenuItem paste = new JMenuItem(new DefaultEditorKit.PasteAction());
+		JMenuItem copy = new JMenuItem(new DefaultEditorKit.CopyAction());
+		copy.setText("Copy");
+		edit.add(copy);
 
-			paste.setText("Paste");
-			edit.add(paste);
+		JMenuItem paste = new JMenuItem(new DefaultEditorKit.PasteAction());
+		paste.setText("Paste");
+		edit.add(paste);
 
 		JMenu style = new JMenu("Style");
 		menubar.add(style);
 
-		JMenuItem left = new JMenuItem(new DefaultEditorKit.InsertContentAction());
-		left.setText("Align Left");
-		edit.add(left);
+		JMenuItem left = new JMenuItem("Align Left");
+		style.add(left);
+		left.addActionListener(ae -> {});
 
+		JMenuItem center = new JMenuItem("Center");
+		style.add(center);
+		center.addActionListener(ae -> {});
+
+		JMenuItem right = new JMenuItem("Align Right");
+		style.add(right);
+		right.addActionListener(ae -> {});
+		style.add(new JSeparator());
+
+		JMenuItem Courier = new JMenuItem("Courier");
+		style.add(Courier);
+		Courier.addActionListener(ae -> {});
+
+		JMenuItem Helvetica = new JMenuItem("Helvetica");
+		style.add(Helvetica);
+		Helvetica.addActionListener(ae -> {});
+
+		JMenuItem Arial = new JMenuItem("Arial");
+		style.add(Arial);
+		Arial.addActionListener(ae -> {
+			getClass();
+		});
+		style.add(new JSeparator());
+
+		JMenuItem fontSize1 = new JMenuItem("Font Size");
+		style.add(fontSize1);
+		fontSize1.addActionListener(ae -> {
+		});
 
 		JMenu symbol = new JMenu("Symbol");
 		menubar.add(symbol);
 
+		JMenuItem rectangle = new JMenu("Rectangle");
+		symbol.add(rectangle);
+		rectangle.addActionListener(ae -> {
+			getClass();
+		});
 
 		JRootPane root = image.getRootPane();
 		root.setJMenuBar(menubar);
@@ -149,12 +176,8 @@ class Base implements BaseComposite {
 		return editarea2;
 	}
 
-
-
 	// Method to perform the save as operation on the text
-	public void save() {
-
-	}
+	public void save() {}
 }
 
 	public class LilLexiUI {
