@@ -2,12 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CharGlyph extends Glyph {
-    CharGlyph(JEditorPane window, String contents)  {
-        this.contents = contents;
-        this.window = window;
+    CharGlyph(String content)  {
+        this.content = content;
     }
     @Override
-    void draw() {
-        window.add(new JLabel((String)contents));
+    public String getContent() {
+        return (String)content;
     }
 }

@@ -4,10 +4,13 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,59 +38,46 @@ class Base implements BaseComposite {
 
 	public JPanel addComposite() {
 		// Creating required JPanels and JLabels and setting text colors
-		north = new JPanel(new BorderLayout(5, 5));
 		editPane = new JPanel();
 		status = new JPanel(new BorderLayout(5, 5));
 		image = new JPanel(new FlowLayout());
 		tools = new JPanel(new BorderLayout(5, 5));
 		east = new JPanel();
 		west = new JPanel();
-		menu = new JPanel(new BorderLayout(5, 5));
 		padding_bottom = new JPanel();
 
 		// Adding JPanel, JLabels to the JFrame with the default Border Layout
-		frame.add(north, BorderLayout.NORTH);
 		frame.add(editPane, BorderLayout.CENTER);
-		frame.add(status, BorderLayout.SOUTH);
 		frame.add(east, BorderLayout.EAST);
 		frame.add(west, BorderLayout.WEST);
-		north.add(image, BorderLayout.NORTH);
-		north.add(menu, BorderLayout.SOUTH);
-		menu.add(tools, BorderLayout.CENTER);
+		frame.add(image, BorderLayout.NORTH);
 		east.add(new Scrollbar());
 
 		// Setting the layout of the 'tools' JPanel
-		tools.setLayout(new BoxLayout(tools, BoxLayout.X_AXIS));
 
 		// Setting preferred size of each component
 		image.setPreferredSize(new Dimension(500, 100));
-		tools.setSize(new Dimension(500, 100));
 		editPane.setSize(new Dimension(800, 800));
+		editPane.setBackground(Color.white);
 		east.setPreferredSize(new Dimension(200, 800));
 		west.setPreferredSize(new Dimension(200, 100));
 
 		// Setting opacity of each component
 		padding_bottom.setOpaque(false);
-		menu.setOpaque(false);
-		tools.setOpaque(false);
 		east.setOpaque(true);
 		west.setOpaque(false);
-		status.setOpaque(false);
 		image.setOpaque(false);
-		editPane.setOpaque(false);
-		north.setOpaque(false);
+		editPane.setVisible(true);
 
-		return tools;
+
+		return editPane;
 	}
 
-	public JPanel addLeaf() {
+	public void addLeaf() {
 		JMenuBar menubar = new JMenuBar();
 
 		JMenu file = new JMenu("File");
 		menubar.add(file);
-		editarea2 = new JPanel();
-		editarea2.setPreferredSize(new Dimension(600, 600));
-		editarea2.setBackground(Color.white);
 		JScrollPane scroll = new JScrollPane(editarea2);
 
 			JMenuItem open = new JMenuItem("Open");
@@ -144,9 +134,6 @@ class Base implements BaseComposite {
 		JRootPane root = image.getRootPane();
 		root.setJMenuBar(menubar);
 		JRootPane root2 = editPane.getRootPane();
-		root2.getContentPane().add(scroll);
-		editPane.setVisible(true);
-		return editarea2;
 	}
 
 
@@ -160,17 +147,36 @@ class Base implements BaseComposite {
 	public class LilLexiUI {
 
 		private Base base;
+		private JPanel p;
+		private LilLexiDoc doc;
 
 		public void start() {
 			// Instantiating the Base class in the Composite Design Pattern
 			 this.base = new Base();
 
 			// Collecting objects of JPanel & JTextPane
-			JPanel p = base.addComposite();
-			JPanel t = base.addLeaf();
+			p = base.addComposite();
+			base.addLeaf();
+			base.frame.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyPressed(KeyEvent e) {
+					doc.add(e.getKeyChar());
+				}
+			});
+
+		}
+
+		public void setDoc(LilLexiDoc doc) {
+			this.doc = doc;
 		}
 
 		public void update() {
+			p.removeAll();
+			List<Glyph> list = doc.getGlyphs();
+			for (Glyph g: list) {
+				p.add(new Label(g.getContent()));
+			}
 			base.frame.pack();
 		}
+
 	}

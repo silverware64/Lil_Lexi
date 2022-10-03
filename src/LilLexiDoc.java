@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * LilLexiDoc
  */
 public class LilLexiDoc {
-	private LilLexiUI ui;
+	private LilLexiUI window;
 	private List<Glyph> glyphs;
 
 	/**
@@ -20,16 +20,16 @@ public class LilLexiDoc {
 		glyphs = new ArrayList<Glyph>();
 	}
 
-	/**
-	 * setUI
-	 */
-	public void setUI(LilLexiUI ui) {this.ui = ui;}
+	public void setWindow(LilLexiUI window) {
+		this.window = window;
+	}
 
 	/**
 	 * add a glyph
 	 */
-	public void add(String s, JEditorPane window) {
-		glyphs.add(new CharGlyph(window,s));
+	public void add(char c) {
+		glyphs.add(new CharGlyph(Character.toString(c)));
+		window.update();
 	}
 
 	/**
