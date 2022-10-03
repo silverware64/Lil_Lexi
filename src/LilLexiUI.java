@@ -160,7 +160,15 @@ class Base implements BaseComposite {
 			base.frame.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
-					doc.add(e.getKeyChar());
+					if (e.getKeyCode() == 8){
+						doc.remove();
+					} else if(e.getKeyCode() == 37){
+						doc.left();
+					} else if(e.getKeyCode() == 39){
+						doc.right();
+					}
+					else{
+					doc.add(e.getKeyChar());}
 				}
 			});
 
@@ -170,12 +178,21 @@ class Base implements BaseComposite {
 			this.doc = doc;
 		}
 
+		public void write(){
+			int i = doc.getIndex();
+			List<Glyph> g = doc.getGlyphs();
+			p.add(new Label(g.get(i).getContent()));
+
+		}
+
+		public void delete(){
+			int i = doc.getIndex();
+			List<Glyph> g = doc.getGlyphs();
+			Component to_remove = p.getComponent(i-1);
+			p.remove( to_remove);
+		}
+
 		public void update() {
-			p.removeAll();
-			List<Glyph> list = doc.getGlyphs();
-			for (Glyph g: list) {
-				p.add(new Label(g.getContent()));
-			}
 			base.frame.pack();
 		}
 
