@@ -12,7 +12,7 @@ class DecoratorPattern implements abstractDecorator, ActionListener{
     DecoratorPattern(){
         Edit.fontframe = new JFrame();
         Edit.label = new JLabel("Select Font Style");
-        String fonts[] = {"Bold", "Italics", "Plain"};
+        String fonts[] = {"Bold", "Italics", "Normal"};
         Edit.combobox = new JComboBox(fonts);
         Edit.fontframe.setBounds(200, 200, 200,250);
         Edit.label.setBounds(0, 0, 150, 50);
@@ -35,17 +35,17 @@ class DecoratorPattern implements abstractDecorator, ActionListener{
         Edit.fontframe.dispose();
         switch(Edit.selectedFont){
             case "BOLD":{
-                bold b1 = new bold();
+                Bold b1 = new Bold();
                 b1.format();
                 break;
             }
-            case "PLAIN":{
-                plain p1 = new plain();
+            case "NORMAL":{
+                Normal p1 = new Normal();
                 p1.format();
                 break;
             }
             case "ITALICS":{
-                italic i1 = new italic();
+                Italic i1 = new Italic();
                 i1.format();
                 break;
             }
@@ -59,7 +59,7 @@ class DecoratorPattern implements abstractDecorator, ActionListener{
     }
 }
 
-class bold implements abstractDecorator{
+class Bold implements abstractDecorator{
     @Override
     public void format(){
         Font font = new Font(Edit.selectedFont, Font.BOLD, (int) Edit.textSize);
@@ -67,7 +67,7 @@ class bold implements abstractDecorator{
     }
 }
 
-class italic implements abstractDecorator{
+class Italic implements abstractDecorator{
     @Override
     public void format(){
         Font font = new Font(Edit.selectedFont, Font.ITALIC, (int) Edit.textSize);
@@ -75,7 +75,7 @@ class italic implements abstractDecorator{
     }
 }
 
-class plain implements abstractDecorator{
+class Normal implements abstractDecorator{
     @Override
     public void format(){
         Font font = new Font(Edit.selectedFont, Font.PLAIN, (int) Edit.textSize);

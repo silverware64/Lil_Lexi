@@ -62,12 +62,12 @@ class Edit {
 
 public class Lexi {
 
-    static Prototype p;
+    static prototype p;
 
     @SuppressWarnings({"UseSpecificCatch", "Convert2Lambda"})
 
     public static void main(String[] args) {
-        p = new Prototype();
+        p = new prototype();
     }
 
 }

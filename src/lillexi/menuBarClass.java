@@ -1,7 +1,6 @@
 package lillexi;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,14 +15,9 @@ public class menuBarClass {
     Menu menu;
 
     menuBarClass(String data) {
-        if (data.equals("About")) {
-            menu = new About();
-        }
-
         if (data.equals("File")) {
             menu = new File1();
         }
-
         if (Edit.choosemenu == Edit.save) {
             menu.getMenu(Edit.choosemenu);
         } else if (Edit.choosemenu == Edit.load) {
@@ -38,21 +32,8 @@ public class menuBarClass {
     }
 }
 
-class About implements Menu {
-    About() {
-
-    }
-
-    @Override
-    public void getMenu(Object choosemenu) {
-        about1 about1 = new about1();
-    }
-
-}
-
 class File1 implements Menu {
     File1() {
-
     }
 
     @Override
@@ -129,22 +110,3 @@ class Quit extends File1 {
         Edit.frame.dispose();
     }
 }
-
-class about1 extends About {
-    about1() {
-        JFrame f4 = new JFrame();
-        JLabel labelabout = new JLabel("<html>Design patterns used-<br/><br/>1.Factory DP<br/>2.Prototype DP<br/>3.Singleton DP<br/>4.Decorator DP<br/>5.Strategy DP<br/><br/><br/>Made By:<br/><br/>Hardik Sharma</html>", SwingConstants.CENTER);
-        f4.setBounds(200, 200, 800, 800);
-        labelabout.setForeground(Color.BLACK);
-        labelabout.setFont(new Font("Times New Roman", Font.ITALIC, 25));
-        labelabout.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-        f4.setResizable(false);
-
-
-        labelabout.setBounds(0, 0, 700, 700);
-        f4.add(labelabout);
-        f4.setLayout(null);
-        f4.setVisible(true);
-    }
-}
-
