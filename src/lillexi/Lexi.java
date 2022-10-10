@@ -4,14 +4,11 @@ import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
 
-class Edit {
-
+class Glyph {
     static JFrame frame, f2, f3, fontframe;
     static JTextPane pane;
     static JButton bim, set, button, button1;
     static Container cp;
-
-
     static Document doc;
     static Style style;
     static StyleContext context;
@@ -37,7 +34,7 @@ class Edit {
     static DecoratorPattern dp;
 
 
-    Edit() throws BadLocationException {
+    Glyph() throws BadLocationException {
 
         frame = new JFrame("LIL LEXI EDITOR");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

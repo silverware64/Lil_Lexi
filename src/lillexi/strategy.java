@@ -16,7 +16,7 @@ public class strategy {
     photoCanvas o;
 
     public strategy(String s) {
-		insertImage i = new insertImage();
+        insertImage i = new insertImage();
         i.image();
     }
 
@@ -41,7 +41,7 @@ class insertImage implements photoCanvas {
 
         if (pictureFile == null) {
 
-            Edit.pane.requestFocusInWindow();
+            Glyph.pane.requestFocusInWindow();
             return;
         }
 
@@ -52,8 +52,8 @@ class insertImage implements photoCanvas {
         picButton.setAlignmentY(.9f);
         picButton.setAlignmentX(.9f);
         picButton.setName("PICTURE_ID_" + new Random().nextInt());
-        Edit.pane.insertComponent(picButton);
-        Edit.pane.requestFocusInWindow();
+        Glyph.pane.insertComponent(picButton);
+        Glyph.pane.requestFocusInWindow();
 
     }
 
@@ -64,7 +64,7 @@ class insertImage implements photoCanvas {
                 "PNG, JPG & GIF Images", "png", "jpg", "gif");
         chooser.setFileFilter(filter);
 
-        if (chooser.showOpenDialog(Edit.frame) == JFileChooser.APPROVE_OPTION) {
+        if (chooser.showOpenDialog(Glyph.frame) == JFileChooser.APPROVE_OPTION) {
 
             return chooser.getSelectedFile();
         } else {
@@ -80,7 +80,7 @@ class removeImage implements photoCanvas {
 
     @Override
     public void image() {
-        StyledDocument doc = (DefaultStyledDocument) Edit.pane.getDocument();
+        StyledDocument doc = (DefaultStyledDocument) Glyph.pane.getDocument();
         ElementIterator iterator = new ElementIterator(doc);
         Element element;
 
@@ -99,7 +99,7 @@ class removeImage implements photoCanvas {
             }
         }
 
-        Edit.pane.requestFocusInWindow();
+        Glyph.pane.requestFocusInWindow();
         pictureButtonName__ = null;
     }
 }

@@ -15,22 +15,22 @@ class Singleton {
     }
 
     void cut() {
-        Edit.pane.cut();
+        Glyph.pane.cut();
     }
 
     void copy() {
-        Edit.pane.copy();
+        Glyph.pane.copy();
     }
 
     void copyAll() {
-        String text = Edit.pane.getText();
+        String text = Glyph.pane.getText();
         Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
         Clipboard clipboard = defaultToolkit.getSystemClipboard();
         clipboard.setContents(new StringSelection(text), null);
     }
 
     void paste() {
-        Edit.pane.paste();
+        Glyph.pane.paste();
     }
 }
 

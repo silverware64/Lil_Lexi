@@ -1,50 +1,52 @@
 package lillexi;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-interface abstractDecorator{
+interface abstractDecorator {
     void format();
 }
 
-class DecoratorPattern implements abstractDecorator, ActionListener{
-    DecoratorPattern(){
-        Edit.fontframe = new JFrame();
-        Edit.label = new JLabel("Select Font Style");
-        String fonts[] = {"Bold", "Italics", "Normal"};
-        Edit.combobox = new JComboBox(fonts);
-        Edit.fontframe.setBounds(200, 200, 200,250);
-        Edit.label.setBounds(0, 0, 150, 50);
-        Edit.combobox.setBounds(0, 50, 200,50);  
-        Edit.button1 = new JButton("Set Font Style");
-        Edit.button1.setBounds(0, 100, 200,30);
-        Edit.fontframe.add(Edit.label);
-        Edit.fontframe.add(Edit.combobox);
-        Edit.fontframe.add(Edit.button1);
-        Edit.button1.addActionListener(this);
-        Edit.fontframe.setLayout(null);
-        Edit.fontframe.setVisible(true);
-        Edit.fontframe.setResizable(false);
+class DecoratorPattern implements abstractDecorator, ActionListener {
+    DecoratorPattern() {
+        Glyph.fontframe = new JFrame();
+        Glyph.label = new JLabel("Select Font Style");
+        String[] fonts = {"Bold", "Italics", "Normal"};
+        Glyph.combobox = new JComboBox(fonts);
+        Glyph.fontframe.setBounds(200, 200, 200, 250);
+        Glyph.label.setBounds(0, 0, 150, 50);
+        Glyph.combobox.setBounds(0, 50, 200, 50);
+        Glyph.button1 = new JButton("Set Font Style");
+        Glyph.button1.setBounds(0, 100, 200, 30);
+        Glyph.fontframe.add(Glyph.label);
+        Glyph.fontframe.add(Glyph.combobox);
+        Glyph.fontframe.add(Glyph.button1);
+        Glyph.button1.addActionListener(this);
+        Glyph.fontframe.setLayout(null);
+        Glyph.fontframe.setVisible(true);
+        Glyph.fontframe.setResizable(false);
     }
+
     @Override
-    public void format(){
-        Edit.selectedFont = Edit.combobox.getSelectedItem().toString().toUpperCase();
-        Font selectedFontObj = new Font(Edit.selectedFont, Font.PLAIN, (int) Edit.textSize);
-        Edit.pane.setFont(selectedFontObj);
-        Edit.fontframe.dispose();
-        switch(Edit.selectedFont){
-            case "BOLD":{
+    public void format() {
+        Glyph.selectedFont = Glyph.combobox.getSelectedItem().toString().toUpperCase();
+        Font selectedFontObj = new Font(Glyph.selectedFont, Font.PLAIN, (int) Glyph.textSize);
+        Glyph.pane.setFont(selectedFontObj);
+        Glyph.fontframe.dispose();
+        switch (Glyph.selectedFont) {
+            case "BOLD": {
                 Bold b1 = new Bold();
                 b1.format();
                 break;
             }
-            case "NORMAL":{
+            case "NORMAL": {
                 Normal p1 = new Normal();
                 p1.format();
                 break;
             }
-            case "ITALICS":{
+            case "ITALICS": {
                 Italic i1 = new Italic();
                 i1.format();
                 break;
@@ -54,32 +56,32 @@ class DecoratorPattern implements abstractDecorator, ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        Edit.dp.format();
-        Edit.fontframe.setVisible(false);
+        Glyph.dp.format();
+        Glyph.fontframe.setVisible(false);
     }
 }
 
-class Bold implements abstractDecorator{
+class Bold implements abstractDecorator {
     @Override
-    public void format(){
-        Font font = new Font(Edit.selectedFont, Font.BOLD, (int) Edit.textSize);
-        Edit.pane.setFont(font);
+    public void format() {
+        Font font = new Font(Glyph.selectedFont, Font.BOLD, (int) Glyph.textSize);
+        Glyph.pane.setFont(font);
     }
 }
 
-class Italic implements abstractDecorator{
+class Italic implements abstractDecorator {
     @Override
-    public void format(){
-        Font font = new Font(Edit.selectedFont, Font.ITALIC, (int) Edit.textSize);
-        Edit.pane.setFont(font);
+    public void format() {
+        Font font = new Font(Glyph.selectedFont, Font.ITALIC, (int) Glyph.textSize);
+        Glyph.pane.setFont(font);
     }
 }
 
-class Normal implements abstractDecorator{
+class Normal implements abstractDecorator {
     @Override
-    public void format(){
-        Font font = new Font(Edit.selectedFont, Font.PLAIN, (int) Edit.textSize);
-        Edit.pane.setFont(font);
+    public void format() {
+        Font font = new Font(Glyph.selectedFont, Font.PLAIN, (int) Glyph.textSize);
+        Glyph.pane.setFont(font);
     }
 }
 

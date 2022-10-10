@@ -7,29 +7,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 class prototype implements Cloneable {
-   
-   prototype(){
-       try {
+
+    prototype() {
+        try {
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
-        }
-         catch (Exception e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "GUI Error");
         }
-        
+
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Edit edit = new Edit();
+                    Glyph edit = new Glyph();
                 } catch (BadLocationException ex) {
                     Logger.getLogger(prototype.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-}
-  @Override
-	public Object clone() throws CloneNotSupportedException{
-		return new prototype();
-	}
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return new prototype();
+    }
 }
 

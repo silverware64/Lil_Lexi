@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static lillexi.Edit.pane;
+import static lillexi.Glyph.pane;
 
 interface Menu {
     void getMenu(Object choosemenu);
@@ -18,16 +18,16 @@ public class menuBarClass {
         if (data.equals("File")) {
             menu = new File1();
         }
-        if (Edit.choosemenu == Edit.save) {
-            menu.getMenu(Edit.choosemenu);
-        } else if (Edit.choosemenu == Edit.load) {
-            menu.getMenu(Edit.choosemenu);
-        } else if (Edit.choosemenu == Edit.print) {
-            menu.getMenu(Edit.choosemenu);
-        } else if (Edit.choosemenu == Edit.Quit) {
-            menu.getMenu(Edit.choosemenu);
-        } else if (Edit.choosemenu == Edit.about) {
-            menu.getMenu(Edit.choosemenu);
+        if (Glyph.choosemenu == Glyph.save) {
+            menu.getMenu(Glyph.choosemenu);
+        } else if (Glyph.choosemenu == Glyph.load) {
+            menu.getMenu(Glyph.choosemenu);
+        } else if (Glyph.choosemenu == Glyph.print) {
+            menu.getMenu(Glyph.choosemenu);
+        } else if (Glyph.choosemenu == Glyph.Quit) {
+            menu.getMenu(Glyph.choosemenu);
+        } else if (Glyph.choosemenu == Glyph.about) {
+            menu.getMenu(Glyph.choosemenu);
         }
     }
 }
@@ -38,13 +38,13 @@ class File1 implements Menu {
 
     @Override
     public void getMenu(Object choosemenu) {
-        if (choosemenu == Edit.save) {
+        if (choosemenu == Glyph.save) {
             Save save = new Save();
-        } else if (choosemenu == Edit.load) {
+        } else if (choosemenu == Glyph.load) {
             Load load = new Load();
-        } else if (choosemenu == Edit.print) {
+        } else if (choosemenu == Glyph.print) {
             Print print = new Print();
-        } else if (choosemenu == Edit.Quit) {
+        } else if (choosemenu == Glyph.Quit) {
             Quit quit = new Quit();
         }
     }
@@ -66,9 +66,9 @@ class Load extends File1 {
                 read.close();
                 pane.setText(result);
             } catch (FileNotFoundException ex) {
-                Logger.getLogger(Edit.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Glyph.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
-                Logger.getLogger(Edit.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Glyph.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -98,15 +98,15 @@ final class Save extends File1 {
 class Print extends File1 {
     Print() {
         try {
-            Edit.pane.print();
+            Glyph.pane.print();
         } catch (Exception evt) {
-            JOptionPane.showMessageDialog(Edit.frame, evt.getMessage());
+            JOptionPane.showMessageDialog(Glyph.frame, evt.getMessage());
         }
     }
 }
 
 class Quit extends File1 {
     Quit() {
-        Edit.frame.dispose();
+        Glyph.frame.dispose();
     }
 }
