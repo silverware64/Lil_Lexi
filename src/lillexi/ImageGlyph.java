@@ -32,10 +32,9 @@ public class ImageGlyph extends Glyph {
     }
 
     @Override
-    public RectangleGlyph draw(int x, int y) {
+    public void draw(int x, int y) {
         window.add(content);
         Window.panel.add(content);
         content.setLocation(x, y);
-        return null;
     }
 }
