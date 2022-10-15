@@ -10,8 +10,10 @@ public class CursorGlyph extends Glyph {
     public CursorGlyph(Window w){
         window = w;
         content = new JLabel("|");
+        content.setFont(new Font(Font.DIALOG, Font.BOLD,15));
         content.setForeground(Color.BLUE);
         Rectangle r = new Rectangle(new Dimension(15,15));
+
         content.setBounds(r);
     }
 

@@ -54,7 +54,8 @@ class InsertImageCommand extends Command {
 
         if (chooser.showOpenDialog(window) == JFileChooser.APPROVE_OPTION) {
 
-            new ImageGlyph(window, chooser.getSelectedFile().toString());
+            window.glyphs.add(new ImageGlyph(window, chooser.getSelectedFile().toString()));
+            window.redraw();
         }
     }
 }
