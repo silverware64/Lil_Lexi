@@ -1,3 +1,11 @@
+/**
+ * Author: Tobin Nickels
+ * Date: October 14, 2022
+ *
+ * Purpose:
+ * Graphical representation of cursor on text document.
+ * All CursorGlyphs look the same.
+ */
 package lillexi;
 
 import javax.swing.*;
@@ -13,7 +21,6 @@ public class CursorGlyph extends Glyph {
         content.setFont(new Font(Font.DIALOG, Font.BOLD,15));
         content.setForeground(Color.BLUE);
         Rectangle r = new Rectangle(new Dimension(15,15));
-
         content.setBounds(r);
     }
 

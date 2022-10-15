@@ -1,3 +1,12 @@
+/**
+ * Author: Tobin Nickels
+ * Date: October 14, 2022
+ *
+ * Purpose:
+ * Create Swing menus and menu items and add them to Window.
+ * Add action listeners so the corresponding command is executed the menu item is clicked on.
+ * Each menu is a subclass of Glyph
+ */
 package lillexi;
 
 import javax.swing.*;

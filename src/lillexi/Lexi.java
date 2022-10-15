@@ -10,15 +10,24 @@ import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Author: Tobin Nickels
+ * Date: October 14, 2022
+ *
+ * Purpose:
+ * Contains all visual components of the document.
+ * Implements KeyListener to add Glyphs based on user keystrokes.
+ * Stores a dictionary of correctly spelled words.
+ *
+ *
+ */
 class Window extends JFrame implements KeyListener {
     static JPanel panel;
-    static Container cp;
-
-    static JScrollPane scrollpane;
+    private static JScrollPane scrollpane;
     static JMenuBar menuBar;
     static JMenu file, edit, style, symbol;
 
-    static int cursor_position;
+    private static int cursor_position;
     static JMenuItem  quit, newfile, san_serif, dialog, bold, plain, italic,
             insertimg, insertrec, undo, redo, font1, font2, font3, spellcheck;
 
@@ -27,9 +36,9 @@ class Window extends JFrame implements KeyListener {
     static String selected_font = Font.DIALOG;
 
     static int selected_style = Font.PLAIN;
-    static Set<String> dictionary;
+    private Set<String> dictionary;
 
-    static List<Glyph> glyphs, undo_list,redo_list;
+    private static List<Glyph> glyphs, undo_list,redo_list;
 
 
     Window() throws BadLocationException {
@@ -49,22 +58,53 @@ class Window extends JFrame implements KeyListener {
 
 
         Menu menu = new Menu(this);
-        menu.draw(0,0);
-        menuBar.setVisible(true);
         this.setJMenuBar(menu.getContent());
 
         this.setMinimumSize(new Dimension(1500,1000));
 
         this.setVisible(true);
 
+        addKeyListener(this);
+        setDictionary();
+        newFile();
+        this.pack();
+    }
+
+    public void Undo(){
+        glyphs = new ArrayList<>(undo_list);
+    }
+
+    public void setUndo(List<Glyph> l){
+        undo_list = new ArrayList<>(l);
+    }
+
+    public void Redo(){
+        glyphs = new ArrayList<>(redo_list);
+    }
+
+    public void setRedo(List<Glyph> l){
+        redo_list = new ArrayList<>(l);
+    }
+
+    public List<Glyph> getGlyphs(){
+        return glyphs;
+    }
+
+    public void addGlyph(Glyph g){
+        glyphs.add(g);
+    }
+
+    public void newFile(){
         cursor_position =0;
 
         glyphs = new ArrayList<>();
         glyphs.add(new CursorGlyph(this));
         redo_list = new ArrayList<>();
         undo_list = new ArrayList<>();
-        addKeyListener(this);
         this.pack();
+    }
+
+    private void setDictionary(){
         Scanner s = null;
         try {
             s = new Scanner(new File("src/wordlist.txt"));

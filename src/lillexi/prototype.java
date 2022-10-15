@@ -10,7 +10,6 @@ class Prototype implements Cloneable {
    
    Prototype(){
        try {
-            UIManager.setLookAndFeel(new NimbusLookAndFeel());
         }
          catch (Exception e) {
             JOptionPane.showMessageDialog(null, "GUI Error");

@@ -17,7 +17,7 @@ class SpellCheckCommand extends Command {
 
     @Override
     public void execute(Window window) {
-        List<Glyph> glyphs = window.glyphs;
+        List<Glyph> glyphs = window.getGlyphs();
         String current_word = new String("");
         for (int i = 0; i < glyphs.size(); i++) {
                 if(glyphs.get(i).equals(" ")){
@@ -45,25 +45,22 @@ class QuitCommand extends Command {
 class NewFileCommand extends Command {
 
     public void execute(Window window){
-        window.glyphs = new ArrayList<>();
-        window.cursor_position = 0;
-        window.glyphs.add(new CursorGlyph(window));
-        window.redraw();
+        window.newFile();
     }
 }
 
 class RedoCommand extends Command{
     public void execute(Window window){
-        window.undo_list = window.glyphs;
-        window.glyphs = window.redo_list;
+        window.setUndo(window.getGlyphs());
+        window.Redo();
         window.redraw();
     }
 }
 
 class UndoCommand extends Command{
     public void execute(Window window){
-        window.redo_list = window.glyphs;
-        window.glyphs = window.undo_list;
+        window.setUndo(window.getGlyphs());
+        window.Undo();
         window.redraw();
     }
 }
@@ -77,7 +74,7 @@ class InsertImageCommand extends Command {
 
         if (chooser.showOpenDialog(window) == JFileChooser.APPROVE_OPTION) {
 
-            window.glyphs.add(new ImageGlyph(window, chooser.getSelectedFile().toString()));
+            window.addGlyph(new ImageGlyph(window, chooser.getSelectedFile().toString()));
             window.redraw();
         }
     }
@@ -86,7 +83,7 @@ class InsertImageCommand extends Command {
 class InsertRectangleCommand extends Command{
 
     public void execute(Window window) {
-        window.glyphs.add(new RectangleGlyph());
+        window.addGlyph(new RectangleGlyph());
         window.redraw();
     }
 }
