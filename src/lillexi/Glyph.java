@@ -1,6 +1,7 @@
 package lillexi;
 
 public abstract class Glyph {
+
     protected Window window;
 
     protected int width;

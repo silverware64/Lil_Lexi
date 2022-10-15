@@ -1,8 +1,12 @@
 package lillexi;
-
+/*
+ * Date:
+ * Author: Deez Nutz and Joe Mama
+ */
 import javax.swing.*;
 import java.awt.*;
 
+// This class is the Cursor class that
 public class CursorGlyph extends Glyph {
 
     private JLabel content;
