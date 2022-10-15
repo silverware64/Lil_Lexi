@@ -1,15 +1,15 @@
 package lillexi;
-/*
- * Date:
- * Author: Deez Nutz and Joe Mama
- */
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.Random;
 
-// This class
+/*
+Date: 14 Oct 2022
+Author: Nicholas Bell
+Purpose: The purpose of the ImageGlyph class is to create an image layout with set margins, alignment, bounds.
+ */
 public class ImageGlyph extends Glyph {
 
     private final JButton content;

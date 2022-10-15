@@ -1,12 +1,8 @@
 package lillexi;
-/*
- * Date:
- * Author: Deez Nutz and Joe Mama
- */
+
 import javax.swing.*;
 import java.awt.*;
 
-// This class is the Cursor class that
 public class CursorGlyph extends Glyph {
 
     private JLabel content;
@@ -17,7 +13,6 @@ public class CursorGlyph extends Glyph {
         content.setFont(new Font(Font.DIALOG, Font.BOLD,15));
         content.setForeground(Color.BLUE);
         Rectangle r = new Rectangle(new Dimension(15,15));
-
         content.setBounds(r);
     }
 
@@ -26,8 +21,6 @@ public class CursorGlyph extends Glyph {
         window.add(content);
         window.panel.add(content);
         content.setLocation(x,y);
-
         return null;
     }
-
 }

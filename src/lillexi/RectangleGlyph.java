@@ -1,15 +1,15 @@
 package lillexi;
-/*
- * Date:
- * Author: Deez Nutz and Joe Mama
- */
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.Random;
 
-// Class that
+/*
+Date: 14 Oct 2022
+Author: Nicholas Bell
+Purpose: The purpose of the RectangleGlyph class is to create a rectangle object with set margins, alignment, bounds.
+ */
 public class RectangleGlyph extends Glyph {
 
     private final JButton content;

@@ -3,6 +3,12 @@ package lillexi;
 import javax.swing.*;
 import java.awt.geom.Rectangle2D;
 
+/*
+Date: 14 Oct 2022
+Author: Nicholas Bell
+Purpose: The purpose of the Character class is the to draw character glyphs within the content bounds.
+         The character glyphs are stored in string labels, that are also bounded.
+ */
 public class CharacterGlyph extends Glyph{
 
     private JLabel content;
