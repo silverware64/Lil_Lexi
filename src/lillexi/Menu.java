@@ -17,16 +17,12 @@ public class Menu extends Glyph{
         content = new JMenuBar();
         window.menuBar = content;
         Edit edit = new Edit(window);
-        edit.draw(0,0);
         window.menuBar.add(edit.getContent());
         Symbol symbol = new Symbol(window);
-        symbol.draw(0,0);
         window.menuBar.add(symbol.getContent());
         File file = new File(window);
-        symbol.draw(0,0);
         window.menuBar.add(symbol.getContent());
         Style style = new Style(window);
-        symbol.draw(0,0);
         window.menuBar.add(symbol.getContent());
         content.add(file.getContent());
         content.add(style.getContent());
@@ -45,9 +41,6 @@ class Symbol extends Glyph{
 
     public Symbol(Window w){
         window = w;
-    }
-    public void draw(int x, int y) {
-
         content = new JMenu("     Symbol");
         window.symbol = content;
         window.insertimg = new JMenuItem(new AbstractAction("Insert Image") {
@@ -67,6 +60,9 @@ class Symbol extends Glyph{
         });
         content.add(window.insertrec);
     }
+    public void draw(int x, int y) {
+
+    }
 
     public JMenu getContent() {
         return content;
@@ -79,11 +75,6 @@ class File extends Glyph {
 
     public File(Window w) {
         window = w;
-
-
-
-    }
-    public void draw(int x, int y){
         content = new JMenu("     File");
         window.file = content;
         window.quit = new JMenuItem(new AbstractAction("Quit") {
@@ -93,9 +84,11 @@ class File extends Glyph {
             }
         });
         content.add(window.quit);
-        window.file = content;
         window.newfile = new JMenuItem("New File");
         content.add(window.newfile);
+    }
+    public void draw(int x, int y){
+
     }
 
     public JMenu getContent() {
@@ -107,10 +100,6 @@ class Edit extends Glyph{
     private JMenu content;
     public Edit(Window w){
         window = w;
-
-    }
-
-    public void draw(int x, int y) {
         content = new JMenu("    Edit");
         window.edit = content;
         content.add(window.edit);
@@ -128,6 +117,11 @@ class Edit extends Glyph{
             }
         });
         content.add(window.undo);
+
+    }
+
+    public void draw(int x, int y) {
+
     }
 
     public JMenu getContent() {
@@ -139,11 +133,8 @@ class Style extends Glyph{
     private JMenu content;
     public Style(Window w){
         this.window = w;
-
-
-    }
-    public void draw(int x, int y){
         window.style = new JMenu("     Style");
+
         content = window.style;
         window.dialog = new JMenuItem(new AbstractAction("Dialog") {
             @Override
@@ -185,6 +176,9 @@ class Style extends Glyph{
         });
         window.san_serif.setFont(new Font(Font.SERIF, Font.PLAIN,12));
         content.add(window.san_serif);
+
+    }
+    public void draw(int x, int y){
     }
 
     public JMenu getContent() {

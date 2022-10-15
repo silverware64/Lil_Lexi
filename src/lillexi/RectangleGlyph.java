@@ -8,9 +8,6 @@ public class RectangleGlyph extends Glyph{
 
     @Override
     public void draw(int x, int y){
-        window.add(content);
-        window.panel.add(content);
-        content.setLocation(x,y);
 
     }
 }

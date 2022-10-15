@@ -16,19 +16,17 @@ class Window extends JFrame implements KeyListener {
     static JMenuBar menuBar;
     static JMenu file, edit, style, symbol;
 
-    static JLabel cursor;
+    static int cursor_position;
     static JMenuItem  quit, newfile, san_serif, dialog, bold, plain, italic,
             insertimg, insertrec, undo, redo;
 
 
     static int selected_size = 12;
-    static int selected_glyph;
-
-    static int page_height;
     static String selected_font = Font.DIALOG;
 
-    static int selected_style;
-    static List<Glyph> glyphs;
+    static int selected_style = Font.PLAIN;
+
+    static List<Glyph> glyphs, undo_list,redo_list;
 
 
     Window() throws BadLocationException {
@@ -56,17 +54,10 @@ class Window extends JFrame implements KeyListener {
 
         this.setVisible(true);
 
-        this.cursor = new JLabel("|");
-        cursor.setForeground(Color.BLUE);
-        cursor.setBounds(0,0,5,10);
-        this.add(cursor);
-        this.panel.add(cursor);
-
-        page_height = 750;
-
-        selected_glyph =0;
+        cursor_position =0;
 
         glyphs = new ArrayList<>();
+        redo_list = new ArrayList<>();
         addKeyListener(this);
         this.pack();
 
@@ -90,39 +81,38 @@ class Window extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Rectangle bounds_c = this.cursor.getBounds();
 
         if(e.getKeyCode() == 8) {
-            this.cursor.setBounds(bounds_c.x+bounds_c.width,bounds_c.y,5,15);
+            if (cursor_position > 0) {
+                undo_list = new ArrayList<>(glyphs);
+                glyphs.remove(cursor_position - 1);
+                cursor_position--;
+                this.redraw();
+            }
+            this.redraw();
         }else if(e.getKeyCode() == 37) {
-            if (selected_glyph > 0) {
-                int shift = this.glyphs.get(selected_glyph).getWidth();
-                this.cursor.setBounds(bounds_c.x-shift,bounds_c.y,5,15);
-                selected_glyph--;
+            if (cursor_position > 0) {
+                Glyph temp = glyphs.get(cursor_position);
+                glyphs.set(cursor_position,new CursorGlyph(this));
+                glyphs.set(cursor_position+1,temp);
+                cursor_position--;
+                this.redraw();
             }
         } else if (e.getKeyCode() == 39) {
-            if(selected_glyph < this.glyphs.size()){
-                int shift = this.glyphs.get(selected_glyph).getWidth();
-                this.cursor.setBounds(bounds_c.x+shift,bounds_c.y,5,15);
-                selected_glyph++;
+            if(cursor_position < this.glyphs.size()){
+                Glyph temp = glyphs.get(cursor_position);
+                glyphs.set(cursor_position,new CursorGlyph(this));
+                glyphs.set(cursor_position+1,temp);
+                cursor_position++;
+                this.redraw();
             }
         } else {
             CharacterGlyph g = new CharacterGlyph(this, Character.toString(e.getKeyChar()));
+            undo_list = new ArrayList<>(glyphs);
             glyphs.add(g);
+            cursor_position++;
             this.redraw();
         }
-        if(bounds_c.x >= this.panel.getBounds().width){
-            this.cursor.setBounds(0,bounds_c.y+20,5,15);
-            if(bounds_c.y > this.page_height){
-                this.page_height+=750;
-                JLabel line_break = new JLabel("[END PAGE]----------------------------------------------------------------");
-                line_break.setBounds(0,bounds_c.y+20,800,20);
-                this.add(line_break);
-                this.panel.add(line_break);
-                this.cursor.setBounds(0,bounds_c.y+40,20,20);
-            }
-        }
-        this.pack();
     }
 
     @Override

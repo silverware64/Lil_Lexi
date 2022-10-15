@@ -20,6 +20,8 @@ public class ImageGlyph extends Glyph {
         picButton.setAlignmentX(.9f);
         picButton.setName("PICTURE_ID_" + new Random().nextInt());
         content = picButton;
+        width = content.getBounds().width;
+        height = content.getBounds().height;
     }
     @Override
     public void draw(int x, int y){

@@ -5,6 +5,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Command {
@@ -18,12 +19,30 @@ class QuitCommand extends Command {
     }
 }
 
+class NewFileCommand extends Command {
+
+    public void execute(Window window){
+        window.glyphs = new ArrayList<>();
+        window.cursor_position = 0;
+        window.glyphs.add(new CursorGlyph(window));
+        window.redraw();
+    }
+}
+
 class RedoCommand extends Command{
-    public void execute(Window window){}
+    public void execute(Window window){
+        window.undo_list = window.glyphs;
+        window.glyphs = window.redo_list;
+        window.redraw();
+    }
 }
 
 class UndoCommand extends Command{
-    public void execute(Window window){}
+    public void execute(Window window){
+        window.redo_list = window.glyphs;
+        window.glyphs = window.undo_list;
+        window.redraw();
+    }
 }
 
 class InsertImageCommand extends Command {
@@ -35,7 +54,7 @@ class InsertImageCommand extends Command {
 
         if (chooser.showOpenDialog(window) == JFileChooser.APPROVE_OPTION) {
 
-            new ImageGlyph(chooser.getSelectedFile().toString());
+            new ImageGlyph(window, chooser.getSelectedFile().toString());
         }
     }
 }
