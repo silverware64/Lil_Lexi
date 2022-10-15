@@ -50,14 +50,16 @@ class Window extends JFrame implements KeyListener {
         menuBar.setVisible(true);
         this.setJMenuBar(menu.getContent());
 
-        this.setMinimumSize(new Dimension(1100,600));
+        this.setMinimumSize(new Dimension(1500,1000));
 
         this.setVisible(true);
 
         cursor_position =0;
 
         glyphs = new ArrayList<>();
+        glyphs.add(new CursorGlyph(this));
         redo_list = new ArrayList<>();
+        undo_list = new ArrayList<>();
         addKeyListener(this);
         this.pack();
 
@@ -69,7 +71,7 @@ class Window extends JFrame implements KeyListener {
         int y = 0;
         for (int i = 0; i < this.glyphs.size(); i++) {
             x += glyphs.get(i).getWidth();
-            glyphs.get(i).draw(x%600,x/600);
+            glyphs.get(i).draw(x%600+5,x/600*20);
         }
         this.pack();
     }
@@ -92,25 +94,24 @@ class Window extends JFrame implements KeyListener {
             this.redraw();
         }else if(e.getKeyCode() == 37) {
             if (cursor_position > 0) {
-                Glyph temp = glyphs.get(cursor_position);
-                glyphs.set(cursor_position,new CursorGlyph(this));
-                glyphs.set(cursor_position+1,temp);
+                Glyph temp = glyphs.get(cursor_position-1);
+                glyphs.set(cursor_position-1,new CursorGlyph(this));
+                glyphs.set(cursor_position,temp);
                 cursor_position--;
                 this.redraw();
             }
         } else if (e.getKeyCode() == 39) {
-            if(cursor_position < this.glyphs.size()){
-                Glyph temp = glyphs.get(cursor_position);
-                glyphs.set(cursor_position,new CursorGlyph(this));
-                glyphs.set(cursor_position+1,temp);
+            if(cursor_position < this.glyphs.size()-1){
+                Glyph temp = glyphs.get(cursor_position+1);
+                glyphs.set(cursor_position+1,new CursorGlyph(this));
+                glyphs.set(cursor_position,temp);
                 cursor_position++;
                 this.redraw();
             }
         } else {
             CharacterGlyph g = new CharacterGlyph(this, Character.toString(e.getKeyChar()));
-            undo_list = new ArrayList<>(glyphs);
-            glyphs.add(g);
             cursor_position++;
+            glyphs.add(cursor_position-1,g);
             this.redraw();
         }
     }

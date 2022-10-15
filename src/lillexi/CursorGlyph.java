@@ -12,7 +12,7 @@ public class CursorGlyph extends Glyph {
         window = w;
         content = new JLabel("|");
         content.setForeground(Color.BLUE);
-        Rectangle r = new Rectangle(new Dimension(5,10));
+        Rectangle r = new Rectangle(new Dimension(15,15));
         content.setBounds(r);
     }
 
