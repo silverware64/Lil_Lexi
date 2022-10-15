@@ -17,13 +17,16 @@ public class CursorGlyph extends Glyph {
         content.setBounds(r);
     }
 
+    public String toString(){
+        return "";
+    }
+
     @Override
-    public RectangleGlyph draw(int x, int y){
+    public void draw(int x, int y){
         window.add(content);
         window.panel.add(content);
         content.setLocation(x,y);
 
-        return null;
     }
 
 }

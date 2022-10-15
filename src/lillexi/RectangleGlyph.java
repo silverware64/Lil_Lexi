@@ -16,10 +16,13 @@ public class RectangleGlyph extends Glyph{
             // handle exception...
         }
     }
+    public String toString(){
+        return "";
+    }
 
     @Override
-    public RectangleGlyph draw(int x, int y) {
-        return new RectangleGlyph();
+    public void draw(int x, int y) {
+
     }
 
 }

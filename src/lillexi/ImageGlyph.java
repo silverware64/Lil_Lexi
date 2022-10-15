@@ -25,11 +25,13 @@ public class ImageGlyph extends Glyph {
         width = content.getBounds().width;
         height = content.getBounds().height;
     }
+    public String toString(){
+        return "";
+    }
     @Override
-    public RectangleGlyph draw(int x, int y){
+    public void draw(int x, int y){
         window.add(content);
         window.panel.add(content);
         content.setLocation(x,y);
-        return null;
     }
 }

@@ -10,10 +10,6 @@ public class Menu extends Glyph{
 
     public Menu(Window w){
         window = w;
-
-    }
-
-    public RectangleGlyph draw(int x, int y) {
         content = new JMenuBar();
         window.menuBar = content;
         Edit edit = new Edit(window);
@@ -28,7 +24,11 @@ public class Menu extends Glyph{
         content.add(style.getContent());
         content.add(edit.getContent());
         content.add(symbol.getContent());
-        return null;
+
+    }
+
+    public void draw(int x, int y) {
+
     }
 
     public JMenuBar getContent() {
@@ -61,9 +61,8 @@ class Symbol extends Glyph{
         });
         content.add(window.insertrec);
     }
-    public RectangleGlyph draw(int x, int y) {
+    public void draw(int x, int y) {
 
-        return null;
     }
 
     public JMenu getContent() {
@@ -86,12 +85,15 @@ class File extends Glyph {
             }
         });
         content.add(window.quit);
-        window.newfile = new JMenuItem("New File");
+        window.newfile = new JMenuItem(new AbstractAction("New File") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new NewFileCommand().execute(window);
+            }
+        });
         content.add(window.newfile);
     }
-    public RectangleGlyph draw(int x, int y){
-
-        return null;
+    public void draw(int x, int y){
     }
 
     public JMenu getContent() {
@@ -120,12 +122,19 @@ class Edit extends Glyph{
             }
         });
         content.add(window.undo);
+        window.spellcheck = new JMenuItem(new AbstractAction("Spell Check") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SpellCheckCommand().execute(window);
+                window.pack();
+            }
+        });
+        window.spellcheck.setForeground(Color.green);
+        content.add(window.spellcheck);
 
     }
 
-    public RectangleGlyph draw(int x, int y) {
-
-        return null;
+    public void draw(int x, int y) {
     }
 
     public JMenu getContent() {
@@ -181,9 +190,34 @@ class Style extends Glyph{
         window.san_serif.setFont(new Font(Font.SERIF, Font.PLAIN,12));
         content.add(window.san_serif);
 
+        window.font1 = new JMenuItem(new AbstractAction("GNU") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Font1Command().execute(window);
+            }
+        });
+        window.font1.setFont(new Font(Font.DIALOG, Font.PLAIN,12));
+        content.add(window.font1);
+
+        window.font2 = new JMenuItem(new AbstractAction("GNU") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Font2Command().execute(window);
+            }
+        });
+        window.font2.setFont(new Font(Font.DIALOG, Font.PLAIN,16));
+        content.add(window.font2);
+
+        window.font3 = new JMenuItem(new AbstractAction("GNU") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new Font3Command().execute(window);
+            }
+        });
+        window.font3.setFont(new Font(Font.DIALOG, Font.PLAIN,20));
+        content.add(window.font3);
     }
-    public RectangleGlyph draw(int x, int y){
-        return null;
+    public void draw(int x, int y){
     }
 
     public JMenu getContent() {

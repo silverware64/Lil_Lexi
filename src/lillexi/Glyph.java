@@ -12,6 +12,6 @@ public abstract class Glyph {
     public int getWidth(){return width;}
     public int getHeight(){return height;}
 
-    public abstract RectangleGlyph draw(int x, int y);
+    public abstract void draw(int x, int y);
 
 }

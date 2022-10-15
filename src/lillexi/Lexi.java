@@ -5,7 +5,9 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 import java.util.List;
 
 class Window extends JFrame implements KeyListener {
@@ -18,13 +20,14 @@ class Window extends JFrame implements KeyListener {
 
     static int cursor_position;
     static JMenuItem  quit, newfile, san_serif, dialog, bold, plain, italic,
-            insertimg, insertrec, undo, redo;
+            insertimg, insertrec, undo, redo, font1, font2, font3, spellcheck;
 
 
     static int selected_size = 12;
     static String selected_font = Font.DIALOG;
 
     static int selected_style = Font.PLAIN;
+    static Set<String> dictionary;
 
     static List<Glyph> glyphs, undo_list,redo_list;
 
@@ -62,7 +65,20 @@ class Window extends JFrame implements KeyListener {
         undo_list = new ArrayList<>();
         addKeyListener(this);
         this.pack();
+        Scanner s = null;
+        try {
+            s = new Scanner(new File("src/wordlist.txt"));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        dictionary = new HashSet<>();
+        while (s.hasNext()) {
+            dictionary.add(s.nextLine());
+        }
+    }
 
+    public boolean inDictionary(String s){
+        return dictionary.contains(s);
     }
 
     public void redraw(){
@@ -71,7 +87,7 @@ class Window extends JFrame implements KeyListener {
         int y = 0;
         for (int i = 0; i < this.glyphs.size(); i++) {
             x += glyphs.get(i).getWidth();
-            glyphs.get(i).draw(x%600+5,x/600*20);
+            glyphs.get(i).draw(x%600+10,x/600*20);
         }
         this.pack();
     }
@@ -110,6 +126,7 @@ class Window extends JFrame implements KeyListener {
             }
         } else {
             CharacterGlyph g = new CharacterGlyph(this, Character.toString(e.getKeyChar()));
+            this.undo_list = new ArrayList<>(glyphs);
             cursor_position++;
             glyphs.add(cursor_position-1,g);
             this.redraw();

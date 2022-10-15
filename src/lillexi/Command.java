@@ -7,9 +7,32 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.List;
 
 public abstract class Command {
     public abstract void execute(Window window);
+}
+
+class SpellCheckCommand extends Command {
+
+    @Override
+    public void execute(Window window) {
+        List<Glyph> glyphs = window.glyphs;
+        String current_word = new String("");
+        for (int i = 0; i < glyphs.size(); i++) {
+                if(glyphs.get(i).equals(" ")){
+                    boolean good = window.inDictionary(current_word);
+                    if(!good){
+                        window.spellcheck.setForeground(Color.red);
+                        break;
+                    }
+                }
+                else {
+                    current_word += glyphs.get(i).toString();
+                }
+        }
+        window.spellcheck.setForeground(Color.green);
+    }
 }
 
 class QuitCommand extends Command {
@@ -63,7 +86,8 @@ class InsertImageCommand extends Command {
 class InsertRectangleCommand extends Command{
 
     public void execute(Window window) {
-
+        window.glyphs.add(new RectangleGlyph());
+        window.redraw();
     }
 }
 
@@ -93,5 +117,21 @@ class DialogCommand extends Command {
 class SanSerifCommand extends Command {
     public void execute(Window window) {
         window.selected_font = Font.SANS_SERIF;
+    }
+}
+
+class Font1Command extends Command {
+    public void execute(Window window) {
+        window.selected_size = 12;
+    }
+}
+class Font2Command extends Command {
+    public void execute(Window window) {
+        window.selected_size = 16;
+    }
+}
+class Font3Command extends Command {
+    public void execute(Window window) {
+        window.selected_size = 20;
     }
 }
