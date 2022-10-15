@@ -24,9 +24,10 @@ public class ImageGlyph extends Glyph {
         height = content.getBounds().height;
     }
     @Override
-    public void draw(int x, int y){
+    public RectangleGlyph draw(int x, int y){
         window.add(content);
         window.panel.add(content);
         content.setLocation(x,y);
+        return null;
     }
 }

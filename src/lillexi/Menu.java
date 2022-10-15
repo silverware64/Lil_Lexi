@@ -13,7 +13,7 @@ public class Menu extends Glyph{
 
     }
 
-    public void draw(int x, int y) {
+    public RectangleGlyph draw(int x, int y) {
         content = new JMenuBar();
         window.menuBar = content;
         Edit edit = new Edit(window);
@@ -28,6 +28,7 @@ public class Menu extends Glyph{
         content.add(style.getContent());
         content.add(edit.getContent());
         content.add(symbol.getContent());
+        return null;
     }
 
     public JMenuBar getContent() {
@@ -60,8 +61,9 @@ class Symbol extends Glyph{
         });
         content.add(window.insertrec);
     }
-    public void draw(int x, int y) {
+    public RectangleGlyph draw(int x, int y) {
 
+        return null;
     }
 
     public JMenu getContent() {
@@ -87,8 +89,9 @@ class File extends Glyph {
         window.newfile = new JMenuItem("New File");
         content.add(window.newfile);
     }
-    public void draw(int x, int y){
+    public RectangleGlyph draw(int x, int y){
 
+        return null;
     }
 
     public JMenu getContent() {
@@ -120,8 +123,9 @@ class Edit extends Glyph{
 
     }
 
-    public void draw(int x, int y) {
+    public RectangleGlyph draw(int x, int y) {
 
+        return null;
     }
 
     public JMenu getContent() {
@@ -178,7 +182,8 @@ class Style extends Glyph{
         content.add(window.san_serif);
 
     }
-    public void draw(int x, int y){
+    public RectangleGlyph draw(int x, int y){
+        return null;
     }
 
     public JMenu getContent() {

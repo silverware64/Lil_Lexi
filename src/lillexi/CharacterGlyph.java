@@ -1,7 +1,6 @@
 package lillexi;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class CharacterGlyph extends Glyph{
@@ -19,10 +18,11 @@ public class CharacterGlyph extends Glyph{
     }
 
     @Override
-    public void draw(int x, int y){
+    public RectangleGlyph draw(int x, int y){
         window.add(content);
         window.panel.add(content);
         content.setLocation(x,y);
 
+        return null;
     }
 }

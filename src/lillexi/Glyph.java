@@ -1,7 +1,5 @@
 package lillexi;
 
-import java.awt.*;
-
 public abstract class Glyph {
     protected Window window;
 
@@ -14,6 +12,6 @@ public abstract class Glyph {
     public int getWidth(){return width;}
     public int getHeight(){return height;}
 
-    public abstract void  draw(int x, int y);
+    public abstract RectangleGlyph draw(int x, int y);
 
 }
