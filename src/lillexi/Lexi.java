@@ -3,68 +3,149 @@ package lillexi;
 import javax.swing.*;
 import javax.swing.text.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
-class Glyph {
-    static JFrame frame, f2, f3, fontframe;
-    static JTextPane pane;
-    static JButton bim, set, button, button1;
+class Window extends JFrame implements KeyListener {
+    static JPanel panel;
     static Container cp;
-    static Document doc;
-    static Style style;
-    static StyleContext context;
-    static StyledDocument document;
-    static SimpleAttributeSet attributeSet;
 
-    static JTextField a, b, size1;
     static JScrollPane scrollpane;
-    static JLabel l1, x, y, size, label;
-    static JComboBox combobox;
-    static Canvas c;
     static JMenuBar menuBar;
-    static JMenu file, edit, imgopt, fontopt, bcolor, tools, options;
-    static JMenuItem load, print, save, Quit, about, fontsize, newfile, backgroundcolor, fontcolor,
-            fontstyle, fontface, rotateimg, resizeimg, removeimg, insertimg, cut, copy, copyall, paste, undo, redo;
+    static JMenu file, edit, style, symbol;
 
-    static Color c1;
-    static float zoomLevel = 1.0f;
-    static float textSize = 12.0f;
-    static String selectedFont = "Arial";
-
-    static Object choosemenu;
-    static DecoratorPattern dp;
+    static JLabel cursor;
+    static JMenuItem  quit, newfile, san_serif, dialog, bold, plain, italic,
+            insertimg, insertrec, undo, redo;
 
 
-    Glyph() throws BadLocationException {
+    static int selected_size = 12;
+    static int selected_glyph;
 
-        frame = new JFrame("LIL LEXI EDITOR");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        cp = frame.getContentPane();
-        pane = new JTextPane();
+    static int page_height;
+    static String selected_font = Font.DIALOG;
 
-        attributeSet = new SimpleAttributeSet();
+    static int selected_style;
+    static List<Glyph> glyphs;
 
-        // Set the attributes before adding text 
-        pane.setCharacterAttributes(attributeSet, true);
-        doc = pane.getStyledDocument();
 
-        JScrollPane scrollPane = new JScrollPane(pane);
-        cp.add(scrollPane, BorderLayout.CENTER);
+    Window() throws BadLocationException {
+        this.setTitle("LIL LEXI EDITOR");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.setSize(1500, 1000);
-        frame.setVisible(true);
-        frame.setJMenuBar((new menuBar()).createMenuBar());
+
+        panel = new JPanel();
+        panel.setLayout(null);
+        panel.setVisible(true);
+        panel.setBackground(Color.white);
+        panel.setMaximumSize(new Dimension(600,500));
+        getContentPane().add(panel);
+        scrollpane = new JScrollPane(panel);
+        getContentPane().add(scrollpane,BorderLayout.CENTER);
+
+
+
+        Menu menu = new Menu(this);
+        menu.draw(0,0);
+        menuBar.setVisible(true);
+        this.setJMenuBar(menu.getContent());
+
+        this.setMinimumSize(new Dimension(1100,600));
+
+        this.setVisible(true);
+
+        this.cursor = new JLabel("|");
+        cursor.setForeground(Color.BLUE);
+        cursor.setBounds(0,0,5,10);
+        this.add(cursor);
+        this.panel.add(cursor);
+
+        page_height = 750;
+
+        selected_glyph =0;
+
+        glyphs = new ArrayList<>();
+        addKeyListener(this);
+        this.pack();
 
     }
+
+    public void redraw(){
+        this.panel.removeAll();
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < this.glyphs.size(); i++) {
+            x += glyphs.get(i).getWidth();
+            glyphs.get(i).draw(x%600,x/600);
+        }
+        this.pack();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        Rectangle bounds_c = this.cursor.getBounds();
+
+        if(e.getKeyCode() == 8) {
+            this.cursor.setBounds(bounds_c.x+bounds_c.width,bounds_c.y,5,15);
+        }else if(e.getKeyCode() == 37) {
+            if (selected_glyph > 0) {
+                int shift = this.glyphs.get(selected_glyph).getWidth();
+                this.cursor.setBounds(bounds_c.x-shift,bounds_c.y,5,15);
+                selected_glyph--;
+            }
+        } else if (e.getKeyCode() == 39) {
+            if(selected_glyph < this.glyphs.size()){
+                int shift = this.glyphs.get(selected_glyph).getWidth();
+                this.cursor.setBounds(bounds_c.x+shift,bounds_c.y,5,15);
+                selected_glyph++;
+            }
+        } else {
+            CharacterGlyph g = new CharacterGlyph(this, Character.toString(e.getKeyChar()));
+            glyphs.add(g);
+            this.redraw();
+        }
+        if(bounds_c.x >= this.panel.getBounds().width){
+            this.cursor.setBounds(0,bounds_c.y+20,5,15);
+            if(bounds_c.y > this.page_height){
+                this.page_height+=750;
+                JLabel line_break = new JLabel("[END PAGE]----------------------------------------------------------------");
+                line_break.setBounds(0,bounds_c.y+20,800,20);
+                this.add(line_break);
+                this.panel.add(line_break);
+                this.cursor.setBounds(0,bounds_c.y+40,20,20);
+            }
+        }
+        this.pack();
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+
+    public Font getCurrentFont(){
+        return new Font(this.selected_font, this.selected_style, this.selected_size);
+    }
+
+
 }
 
 public class Lexi {
 
-    static prototype p;
+    static Window w;
 
     @SuppressWarnings({"UseSpecificCatch", "Convert2Lambda"})
 
-    public static void main(String[] args) {
-        p = new prototype();
+    public static void main(String[] args) throws BadLocationException {
+        w = new Window();
     }
 
 }
