@@ -10,7 +10,7 @@ subset of Lexi called Lil Lexi. Two students will work together on a
 single submission. Each student should put their name in a comment for
 every class that they implement.
 
-This program of Lil Lexi is buggy, but works. Some things may cause the program to freeze or crash.
+This program of Lil Lexi is buggy, but works. Some things may cause the program to freeze or crash. The spell check function was lost in a Github push.
 
 [^1]: This program of Lil Lexi is made for CSC 335 Object-Oriented Programming and Design.
 
