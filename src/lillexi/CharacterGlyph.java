@@ -23,12 +23,14 @@ public class CharacterGlyph extends Glyph{
         this.height = content.getBounds().height;
     }
 
+    public String toSting(){
+        return content.getText();
+    }
+
     @Override
-    public RectangleGlyph draw(int x, int y){
+    public void draw(int x, int y){
         window.add(content);
         window.panel.add(content);
         content.setLocation(x,y);
-
-        return null;
     }
 }

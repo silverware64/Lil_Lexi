@@ -5,28 +5,40 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 import java.util.List;
 
+/**
+ * Author: Tobin Nickels
+ * Date: October 14, 2022
+ *
+ * Purpose:
+ * Contains all visual components of the document.
+ * Implements KeyListener to add Glyphs based on user keystrokes.
+ * Stores a dictionary of correctly spelled words.
+ *
+ *
+ */
 class Window extends JFrame implements KeyListener {
     static JPanel panel;
-    static Container cp;
-
-    static JScrollPane scrollpane;
+    private static JScrollPane scrollpane;
     static JMenuBar menuBar;
     static JMenu file, edit, style, symbol;
 
-    static int cursor_position;
+    private static int cursor_position;
     static JMenuItem  quit, newfile, san_serif, dialog, bold, plain, italic,
-            insertimg, insertrec, undo, redo;
+            insertimg, insertrec, undo, redo, font1, font2, font3, spellcheck;
 
 
     static int selected_size = 12;
     static String selected_font = Font.DIALOG;
 
     static int selected_style = Font.PLAIN;
+    private Set<String> dictionary;
 
-    static List<Glyph> glyphs, undo_list,redo_list;
+    private static List<Glyph> glyphs, undo_list,redo_list;
 
 
     Window() throws BadLocationException {
@@ -46,23 +58,67 @@ class Window extends JFrame implements KeyListener {
 
 
         Menu menu = new Menu(this);
-        menu.draw(0,0);
-        menuBar.setVisible(true);
         this.setJMenuBar(menu.getContent());
 
         this.setMinimumSize(new Dimension(1500,1000));
 
         this.setVisible(true);
 
+        addKeyListener(this);
+        setDictionary();
+        newFile();
+        this.pack();
+    }
+
+    public void Undo(){
+        glyphs = new ArrayList<>(undo_list);
+    }
+
+    public void setUndo(List<Glyph> l){
+        undo_list = new ArrayList<>(l);
+    }
+
+    public void Redo(){
+        glyphs = new ArrayList<>(redo_list);
+    }
+
+    public void setRedo(List<Glyph> l){
+        redo_list = new ArrayList<>(l);
+    }
+
+    public List<Glyph> getGlyphs(){
+        return glyphs;
+    }
+
+    public void addGlyph(Glyph g){
+        glyphs.add(g);
+    }
+
+    public void newFile(){
         cursor_position =0;
 
         glyphs = new ArrayList<>();
         glyphs.add(new CursorGlyph(this));
         redo_list = new ArrayList<>();
         undo_list = new ArrayList<>();
-        addKeyListener(this);
         this.pack();
+    }
 
+    private void setDictionary(){
+        Scanner s = null;
+        try {
+            s = new Scanner(new File("src/wordlist.txt"));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        dictionary = new HashSet<>();
+        while (s.hasNext()) {
+            dictionary.add(s.nextLine());
+        }
+    }
+
+    public boolean inDictionary(String s){
+        return dictionary.contains(s);
     }
 
     public void redraw(){
@@ -71,7 +127,7 @@ class Window extends JFrame implements KeyListener {
         int y = 0;
         for (int i = 0; i < this.glyphs.size(); i++) {
             x += glyphs.get(i).getWidth();
-            glyphs.get(i).draw(x%600+5,x/600*20);
+            glyphs.get(i).draw(x%600+10,x/600*20);
         }
         this.pack();
     }
@@ -110,6 +166,7 @@ class Window extends JFrame implements KeyListener {
             }
         } else {
             CharacterGlyph g = new CharacterGlyph(this, Character.toString(e.getKeyChar()));
+            this.undo_list = new ArrayList<>(glyphs);
             cursor_position++;
             glyphs.add(cursor_position-1,g);
             this.redraw();

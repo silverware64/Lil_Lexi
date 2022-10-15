@@ -1,8 +1,20 @@
+/**
+ * Author: Tobin Nickels
+ * Date: October 14, 2022
+ *
+ * Purpose:
+ * Graphical representation of cursor on text document.
+ * All CursorGlyphs look the same.
+ */
 package lillexi;
-
+/*
+ * Date:
+ * Author: Deez Nutz and Joe Mama
+ */
 import javax.swing.*;
 import java.awt.*;
 
+// This class is the Cursor class that
 public class CursorGlyph extends Glyph {
 
     private JLabel content;
@@ -16,11 +28,16 @@ public class CursorGlyph extends Glyph {
         content.setBounds(r);
     }
 
+    public String toString(){
+        return "";
+    }
+
     @Override
-    public RectangleGlyph draw(int x, int y){
+    public void draw(int x, int y){
         window.add(content);
         window.panel.add(content);
         content.setLocation(x,y);
-        return null;
+
     }
+
 }

@@ -1,4 +1,13 @@
 package lillexi;
+/**
+ * Author: Tobin Nickels
+ * Date: October 14, 2022
+ *
+ * Purpose:
+ * Abstract class representing graphic on a text document.
+ *
+ *
+ */
 
 public abstract class Glyph {
 
@@ -13,6 +22,12 @@ public abstract class Glyph {
     public int getWidth(){return width;}
     public int getHeight(){return height;}
 
-    public abstract RectangleGlyph draw(int x, int y);
+    /**
+     * Used to update the glyph with current coordinates.
+     *
+     * @param x
+     * @param y
+     */
+    public abstract void draw(int x, int y);
 
 }
