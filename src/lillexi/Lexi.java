@@ -70,27 +70,27 @@ class Window extends JFrame implements KeyListener {
         this.pack();
     }
 
-    public void Undo(){
+    public static void Undo(){
         glyphs = new ArrayList<>(undo_list);
     }
 
-    public void setUndo(List<Glyph> l){
+    public static void setUndo(List<Glyph> l){
         undo_list = new ArrayList<>(l);
     }
 
-    public void Redo(){
+    public static void Redo(){
         glyphs = new ArrayList<>(redo_list);
     }
 
-    public void setRedo(List<Glyph> l){
+    public static void setRedo(List<Glyph> l){
         redo_list = new ArrayList<>(l);
     }
 
-    public List<Glyph> getGlyphs(){
+    public static List<Glyph> getGlyphs(){
         return glyphs;
     }
 
-    public void addGlyph(Glyph g){
+    public static void addGlyph(Glyph g){
         glyphs.add(g);
     }
 
@@ -117,7 +117,7 @@ class Window extends JFrame implements KeyListener {
         }
     }
 
-    public boolean inDictionary(String s){
+    public  boolean inDictionary(String s){
         return dictionary.contains(s);
     }
 

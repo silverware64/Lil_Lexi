@@ -25,9 +25,7 @@ class QuitCommand extends Command {
 // This class executes the New File Command that is inherited from the Command class.
 class NewFileCommand extends Command {
     public void execute(Window window) {
-        Window.glyphs = new ArrayList<>();
-        Window.cursor_position = 0;
-        Window.glyphs.add(new CursorGlyph(window));
+        window.newFile();
         window.redraw();
     }
 }
@@ -35,8 +33,8 @@ class NewFileCommand extends Command {
 // This class executes the Redo Command that is inherited from the Command class.
 class RedoCommand extends Command {
     public void execute(Window window) {
-        Window.undo_list = Window.glyphs;
-        Window.glyphs = Window.redo_list;
+        Window.setRedo( Window.getGlyphs());
+        Window.Redo();
         window.redraw();
     }
 }
@@ -44,8 +42,8 @@ class RedoCommand extends Command {
 // This class executes the Undo Command that is inherited from the Command class.
 class UndoCommand extends Command {
     public void execute(Window window) {
-        Window.redo_list = Window.glyphs;
-        Window.glyphs = Window.undo_list;
+        Window.setUndo(window.getGlyphs());
+        Window.Undo();
         window.redraw();
     }
 }
@@ -59,7 +57,7 @@ class InsertImageCommand extends Command {
         chooser.setFileFilter(filter);
 
         if (chooser.showOpenDialog(window) == JFileChooser.APPROVE_OPTION) {
-            Window.glyphs.add(new ImageGlyph(window, chooser.getSelectedFile().toString()));
+            Window.addGlyph(new ImageGlyph(window, chooser.getSelectedFile().toString()));
             window.redraw();
         }
     }
@@ -69,7 +67,7 @@ class InsertImageCommand extends Command {
 class InsertRectangleCommand extends Command {
 
     public void execute(Window window) {
-        Window.glyphs.add(new RectangleGlyph(window, "src/lillexi/rectangle.png"));
+        Window.addGlyph(new RectangleGlyph(window, "src/lillexi/rectangle.png"));
         window.redraw();
     }
 }
@@ -109,5 +107,22 @@ class DialogCommand extends Command {
 class SanSerifCommand extends Command {
     public void execute(Window window) {
         Window.selected_font = Font.SANS_SERIF;
+    }
+}
+class Font1Command extends Command {
+    public void execute(Window window) {
+        Window.selected_size = 12;
+    }
+}
+
+class Font2Command extends Command {
+    public void execute(Window window) {
+        Window.selected_size = 16;
+    }
+}
+
+class Font3Command extends Command {
+    public void execute(Window window) {
+        Window.selected_size = 20;
     }
 }

@@ -134,7 +134,6 @@ class Edit extends Glyph{
         window.spellcheck = new JMenuItem(new AbstractAction("Spell Check") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SpellCheckCommand().execute(window);
                 window.pack();
             }
         });
